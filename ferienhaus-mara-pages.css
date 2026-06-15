@@ -321,7 +321,7 @@ section { padding: 82px 0; }
   background: #f0e6d6;
 }
 
-.calendar-section { background: linear-gradient(180deg, var(--ivory), #f1e9da); }
+.calendar-section { background: linear-gradient(180deg, var(--ivory), #f1e9da); scroll-margin-top: 100px; }
 .cal-card {
   max-width: 620px;
   margin: 0 auto;
