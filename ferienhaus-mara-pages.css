@@ -321,6 +321,30 @@ section { padding: 82px 0; }
   background: #f0e6d6;
 }
 
+.calendar-section { background: linear-gradient(180deg, var(--ivory), #f3ecdf); }
+.calendar-card {
+  padding: 34px;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+.calendar-widget {
+  margin: 0 auto;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.calendar-widget table { margin: 0 auto; }
+.calendar-widget img { display: inline-block; }
+.calendar-note {
+  margin: 26px auto 24px;
+  max-width: 640px;
+  color: var(--muted);
+  font-size: .9rem;
+}
+
 footer {
   padding: 34px 0;
   background: var(--brown);
