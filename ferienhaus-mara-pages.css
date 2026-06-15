@@ -321,6 +321,73 @@ section { padding: 82px 0; }
   background: #f0e6d6;
 }
 
+.calendar-section { background: linear-gradient(180deg, var(--ivory), #f3ecdf); }
+.cal-card {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 30px;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+.cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.cal-title { font-family: Georgia, serif; font-size: 1.55rem; color: var(--brown); }
+.cal-nav { display: flex; gap: 8px; }
+.cal-nav button {
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--ivory);
+  color: var(--green);
+  font-size: 1.4rem; line-height: 1;
+  cursor: pointer;
+}
+.cal-nav button:hover:not(:disabled) { background: var(--sage); }
+.cal-nav button:disabled { opacity: .3; cursor: not-allowed; }
+.cal-weekdays, .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+.cal-weekdays { margin-bottom: 8px; }
+.cal-weekdays span {
+  text-align: center;
+  font-size: .72rem; font-weight: 800;
+  letter-spacing: .06em; text-transform: uppercase;
+  color: var(--muted);
+}
+.cal-day {
+  aspect-ratio: 1 / 1;
+  display: grid; place-items: center;
+  border-radius: 12px;
+  font-weight: 700;
+  user-select: none;
+}
+.cal-day.empty { visibility: hidden; }
+.cal-day.past { color: #c9bfb0; }
+.cal-day.free { background: var(--sage); color: var(--green); cursor: pointer; transition: outline .12s ease; }
+.cal-day.free:hover { outline: 2px solid var(--gold); }
+.cal-day.booked { background: #ead9c2; color: #9a7b4f; text-decoration: line-through; }
+.cal-day.in-range { background: var(--green-soft); color: var(--ivory); }
+.cal-day.sel { background: var(--green); color: var(--ivory); }
+.cal-legend {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 22px;
+  margin-top: 20px;
+  font-size: .85rem; font-weight: 700; color: var(--muted);
+}
+.cal-legend span { display: inline-flex; align-items: center; }
+.cal-legend i { width: 14px; height: 14px; border-radius: 4px; margin-right: 8px; }
+.cal-legend .free i { background: var(--sage); }
+.cal-legend .booked i { background: #ead9c2; }
+.cal-legend .sel i { background: var(--green); }
+.cal-summary { margin-top: 24px; text-align: center; }
+.cal-hint { margin: 0; color: var(--muted); }
+.cal-selected { margin: 0 0 16px; font-family: Georgia, serif; font-size: 1.2rem; color: var(--brown); }
+.cal-reset {
+  display: block; margin: 14px auto 0;
+  border: 0; background: none;
+  color: var(--muted); font-size: .85rem;
+  text-decoration: underline; cursor: pointer;
+}
+
 footer {
   padding: 34px 0;
   background: var(--brown);

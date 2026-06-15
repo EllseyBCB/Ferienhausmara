@@ -60,6 +60,40 @@
         </div>
       </div>
     </section>
+
+    <section id="kalender" class="calendar-section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Verf&uuml;gbarkeit</p>
+            <h2>Belegungskalender</h2>
+          </div>
+          <p>W&auml;hlen Sie Ihren Wunschzeitraum direkt im Kalender. Belegte Tage sind markiert. Nach der Auswahl k&ouml;nnen Sie eine unverbindliche Anfrage senden.</p>
+        </div>
+        <div class="cal-card">
+          <div class="cal-head">
+            <div class="cal-title" id="cal-title">&mdash;</div>
+            <div class="cal-nav">
+              <button type="button" id="cal-prev" aria-label="Voriger Monat">&lsaquo;</button>
+              <button type="button" id="cal-next" aria-label="N&auml;chster Monat">&rsaquo;</button>
+            </div>
+          </div>
+          <div class="cal-weekdays" id="cal-weekdays"></div>
+          <div class="cal-grid" id="mara-calendar"></div>
+          <div class="cal-legend">
+            <span class="free"><i></i>frei</span>
+            <span class="booked"><i></i>belegt</span>
+            <span class="sel"><i></i>ausgew&auml;hlt</span>
+          </div>
+          <div class="cal-summary" id="cal-summary">
+            <p class="cal-hint">Bitte Anreise- und Abreisetag w&auml;hlen.</p>
+          </div>
+        </div>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+      <script src="supabase-config.js"></script>
+      <script src="calendar.js"></script>
+    </section>
   </main>
   <footer><div class="container">Ferienhaus Mara &middot; Lohheider Str. 2, 29699 Walsrode &middot; L&uuml;neburger Heide</div></footer>
 </body>
