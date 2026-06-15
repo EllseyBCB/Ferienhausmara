@@ -35,7 +35,36 @@
     var s = document.createElement('span'); s.textContent = w; weekdaysEl.appendChild(s);
   });
 
-  function loadBookings() {
+  // --- Belegungsquelle 1: iCal-Feed (z.B. ferienhausmiete.de) ---------------
+  function ymd8ToDate(s) { return new Date(+s.slice(0, 4), +s.slice(4, 6) - 1, +s.slice(6, 8)); }
+
+  function parseIcs(text) {
+    var set = new Set();
+    if (!text) return set;
+    var blocks = text.split('BEGIN:VEVENT');
+    for (var i = 1; i < blocks.length; i++) {
+      var b = blocks[i];
+      var ds = b.match(/DTSTART[^:\n]*:(\d{8})/);
+      if (!ds) continue;
+      var de = b.match(/DTEND[^:\n]*:(\d{8})/);
+      var start = ymd8ToDate(ds[1]);
+      var end = de ? ymd8ToDate(de[1]) : addDays(start, 1);
+      // DTEND ist exklusiv (Abreisetag) -> nur Naechte start..end-1 belegen
+      for (var d = new Date(start); d < end; d = addDays(d, 1)) set.add(ymd(d));
+    }
+    return set;
+  }
+
+  function loadIcs() {
+    if (!cfg.icsUrl) return Promise.resolve(new Set());
+    return fetch(cfg.icsUrl, { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.text() : ''; })
+      .then(parseIcs)
+      .catch(function () { return new Set(); });
+  }
+
+  // --- Belegungsquelle 2: Supabase (sobald konfiguriert) --------------------
+  function loadSupabase() {
     return new Promise(function (resolve) {
       try {
         if (cfg.url && cfg.anonKey && window.supabase && /^https?:\/\//.test(cfg.url)) {
@@ -56,7 +85,16 @@
           return;
         }
       } catch (e) { /* faellt auf Vorschau-Modus zurueck */ }
-      resolve(new Set()); // keine DB verbunden -> alles frei
+      resolve(new Set());
+    });
+  }
+
+  // Beide Quellen zusammenfuehren (Vereinigung) -> keine Ueberschneidungen.
+  function loadBookings() {
+    return Promise.all([loadIcs(), loadSupabase()]).then(function (sets) {
+      var merged = new Set();
+      sets.forEach(function (s) { s.forEach(function (x) { merged.add(x); }); });
+      return merged;
     });
   }
 

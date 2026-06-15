@@ -28,5 +28,10 @@ window.SUPABASE_CONFIG = {
   anonKey: "",      // anon / publishable Key des NEUEN Projekts
   table: "bookings",
   startColumn: "start_date",
-  endColumn: "end_date"
+  endColumn: "end_date",
+
+  // iCal-Feed von ferienhausmiete.de: belegte Tage werden automatisch
+  // uebernommen, damit es keine Ueberschneidungen gibt. Leeren ("") zum
+  // Deaktivieren. Belegung = Supabase-Eintraege UND iCal-Feed zusammen.
+  icsUrl: "https://www.ferienhausmiete.de/285700.ics"
 };
