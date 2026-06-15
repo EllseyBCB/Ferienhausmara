@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Galerie | Ferienhaus Mara</title>
+  <meta name="description" content="Alle Bilder vom Ferienhaus Mara in Walsrode: Räume, Ausstattung, Außenbereich und Umgebung.">
+  <link rel="stylesheet" href="ferienhaus-mara-pages.css">
+</head>
+<body>
+  <div class="topbar"><div class="container"><span>Lohheider Str. 2 · 29699 Walsrode · Lüneburger Heide</span><span>Bewertung 4,8 · 16 Bewertungen</span></div></div>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="logo" href="index.html" aria-label="Ferienhaus Mara Startseite"></a>
+      <nav class="nav-links" aria-label="Hauptnavigation">
+        <a href="index.html">Startseite</a>
+        <a href="unterkunft.html">Unterkunft</a>
+        <a class="active" href="galerie.html">Galerie</a>
+        <a href="buchen.html">Buchen</a>
+      </nav>
+      <a class="button" href="buchen.html">Reisedaten eingeben</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero" style="--hero-image:url('https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_81029433147171.jpg')">
+      <div class="container page-hero-content">
+        <p class="eyebrow">Bildergalerie</p>
+        <h1>Ferienhaus Mara in Bildern</h1>
+        <p>Alle verfügbaren Aufnahmen der Unterkunft, ihrer Räume, des Außenbereichs und der grünen Umgebung.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div><p class="eyebrow">25 Aufnahmen</p><h2>Ein vollständiger Eindruck</h2></div>
+          <p>Klicken Sie auf ein Bild, um es groß anzusehen. Die Galerie enthält sämtliche gelieferten Objektbilder.</p>
+        </div>
+        <div class="gallery-slider">
+          <button class="gallery-arrow prev" type="button" aria-label="Vorheriges Bild">&#10094;</button>
+          <img id="galleryImage" src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_81029433147171.jpg" alt="Terrasse des Ferienhauses">
+          <button class="gallery-arrow next" type="button" aria-label="Nächstes Bild">&#10095;</button>
+          <span class="gallery-counter" id="galleryCounter">1 / 25</span>
+        </div>
+        <div class="gallery-thumbs" id="galleryThumbs" aria-label="Galerie-Vorschaubilder"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="container">Ferienhaus Mara · Lohheider Str. 2, 29699 Walsrode · Lüneburger Heide</div></footer>
+
+  <script>
+    const galleryImages = [
+      '81029433147171','5366703147171','78366816018951','17084226147171','24585632147171',
+      '69836065128951','31376263147171','38069065833061','59300845128951','39519326147171',
+      '63020875833061','50869183147171','86749355128951','97050373147171','48874788064961',
+      '25374107128951','15937773147171','20724426538951','24563931773761','8686663147171',
+      '9329606147171','93860508128951','24704618128951','2184567128951','29133987128951'
+    ].map(id => `https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_${id}.jpg`);
+    const galleryAlts = [
+      'Terrasse des Ferienhauses','Schlafzimmer mit Doppelbett','Außenansicht des Ferienhauses',
+      'Innenansicht der Wohnung','Wohnbereich','Ausstattung der Unterkunft','Küche','Essbereich',
+      'Weiterer Wohnraum','Badezimmer','Schlafbereich im Dachgeschoss','Weitere Objektansicht 12',
+      'Weitere Objektansicht 13','Weitere Objektansicht 14','Weitere Objektansicht 15',
+      'Weitere Objektansicht 16','Weitere Objektansicht 17','Weitere Objektansicht 18',
+      'Weitere Objektansicht 19','Weitere Objektansicht 20','Weitere Objektansicht 21',
+      'Weitere Objektansicht 22','Weitere Objektansicht 23','Weitere Objektansicht 24',
+      'Erholungswald bei Walsrode'
+    ];
+    const galleryImage = document.getElementById('galleryImage');
+    const galleryCounter = document.getElementById('galleryCounter');
+    const galleryThumbs = document.getElementById('galleryThumbs');
+    let currentImage = 0;
+
+    galleryImages.forEach((src, index) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.setAttribute('aria-label', `Bild ${index + 1} anzeigen`);
+      const image = document.createElement('img');
+      image.src = src;
+      image.alt = galleryAlts[index];
+      button.appendChild(image);
+      button.addEventListener('click', () => showImage(index));
+      galleryThumbs.appendChild(button);
+    });
+
+    function showImage(index) {
+      currentImage = (index + galleryImages.length) % galleryImages.length;
+      galleryImage.src = galleryImages[currentImage];
+      galleryImage.alt = galleryAlts[currentImage];
+      galleryCounter.textContent = `${currentImage + 1} / ${galleryImages.length}`;
+      galleryThumbs.querySelectorAll('button').forEach((button, thumbIndex) => {
+        button.classList.toggle('active', thumbIndex === currentImage);
+      });
+    }
+
+    document.querySelector('.gallery-arrow.prev').addEventListener('click', () => showImage(currentImage - 1));
+    document.querySelector('.gallery-arrow.next').addEventListener('click', () => showImage(currentImage + 1));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') showImage(currentImage - 1);
+      if (event.key === 'ArrowRight') showImage(currentImage + 1);
+    });
+    showImage(0);
+  </script>
+</body>
+</html>

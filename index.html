@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Landhaus-Auszeit in Walsrode | Ferienhausmiete.de</title>
+  <meta name="description" content="Ländlich-elegante Hotel-Webseite für eine VacationRental-Unterkunft in Walsrode, Lüneburger Heide." />
+  <style>
+    :root {
+      --ivory: #fbf7ef;
+      --warm: #f0e6d6;
+      --sand: #d8c3a1;
+      --gold: #b98a46;
+      --brown: #3b2a1d;
+      --brown-soft: #5d4633;
+      --green: #243b2c;
+      --green-2: #3f5f45;
+      --sage: #dce6d5;
+      --text: #2a241e;
+      --muted: #766b60;
+      --line: rgba(59, 42, 29, .15);
+      --shadow: 0 28px 70px rgba(43, 31, 20, .18);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background: var(--ivory);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .18;
+      background-image:
+        linear-gradient(rgba(36,59,44,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(36,59,44,.04) 1px, transparent 1px);
+      background-size: 44px 44px;
+      z-index: -2;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .container { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+
+    .topbar {
+      background: var(--green);
+      color: rgba(251,247,239,.88);
+      font-size: .83rem;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .topbar-inner {
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .topbar-inner span { font-size: 0; }
+    .topbar-inner span::after { font-size: .83rem; }
+    .topbar-inner span:first-child::after {
+      content: "\25CF  LOHHEIDER STR. 2 \00B7  29699 WALSRODE \00B7  L\00DCNEBURGER HEIDE \00B7  NIEDERSACHSEN";
+    }
+    .topbar-inner span:last-child::after {
+      content: "\2605  BEWERTUNG: 4.8 (16 BEW.)";
+    }
+
+    header {
+      position: relative;
+      z-index: 50;
+      background: var(--ivory);
+      border-bottom: 1px solid rgba(59, 42, 29, .08);
+    }
+
+    .nav {
+      min-height: 144px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .brand {
+      position: absolute;
+      left: clamp(18px, 2.5vw, 48px);
+      top: 18px;
+      width: 270px;
+      height: 270px;
+      z-index: 5;
+      display: block;
+      background: url('LogoMara_transparent.png') center / contain no-repeat;
+      filter: drop-shadow(0 12px 18px rgba(43,31,20,.16));
+    }
+
+    .brand strong,
+    .brand span { display: none; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-left: 290px;
+      color: var(--brown-soft);
+      font-size: .94rem;
+      font-weight: 650;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: 999px;
+      background: var(--green);
+      color: var(--ivory);
+      font-weight: 800;
+      box-shadow: 0 14px 30px rgba(36, 59, 44, .2);
+      border: 1px solid rgba(255,255,255,.16);
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    .button:hover { transform: translateY(-2px); background: var(--green-2); box-shadow: 0 20px 42px rgba(36, 59, 44, .25); }
+    .button.light { background: var(--ivory); color: var(--green); box-shadow: none; }
+    .button.outline { background: transparent; color: var(--brown); border: 1px solid var(--line); box-shadow: none; }
+
+    .nav > .button {
+      margin-left: auto;
+      min-height: 64px;
+      padding: 0 34px;
+      font-size: 1rem;
+    }
+
+    .nav > .button::before {
+      content: "\1F4C5";
+      margin-right: 14px;
+      font-size: 1.35rem;
+    }
+
+    .hero {
+      min-height: 765px;
+      position: relative;
+      display: grid;
+      align-items: end;
+      color: var(--ivory);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(12,22,14,.72), rgba(12,22,14,.34) 52%, rgba(12,22,14,.08)),
+        linear-gradient(180deg, rgba(0,0,0,.04), rgba(0,0,0,.32)),
+        url('assets/hero-weide.webp') center/cover no-repeat;
+      z-index: -2;
+      transform: scale(1.02);
+    }
+
+    .hero::after { display: none; }
+
+    .hero-content { padding: 0 0 132px; max-width: 820px; }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      margin-bottom: 24px;
+      padding: 9px 20px;
+      border-radius: 999px;
+      background: rgba(10,20,12,.15);
+      border: 1px solid rgba(251,247,239,.8);
+      backdrop-filter: blur(12px);
+      color: rgba(251,247,239,.92);
+      font-size: .78rem;
+      font-weight: 850;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 400;
+      font-size: clamp(3.5rem, 6vw, 5.4rem);
+      line-height: .98;
+      letter-spacing: -.045em;
+      max-width: 900px;
+      text-wrap: balance;
+    }
+
+    .hero p {
+      margin: 22px 0 30px;
+      max-width: 650px;
+      font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+      color: rgba(251,247,239,.86);
+    }
+
+    .booking-card {
+      width: min(1120px, calc(100% - 64px));
+      margin: -68px auto 0;
+      position: relative;
+      z-index: 5;
+      background: var(--ivory);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(185,138,70,.24);
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      overflow: hidden;
+    }
+
+    .booking-item {
+      padding: 34px 38px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      min-height: 148px;
+    }
+
+    .booking-item span {
+      display: block;
+      color: var(--gold);
+      font-size: .78rem;
+      font-weight: 900;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .booking-item strong { color: var(--brown); font-size: 1.05rem; }
+    .booking-item:nth-child(2n) { border-right: 0; }
+    .booking-item:nth-child(3),
+    .booking-item:nth-child(4) { border-bottom: 0; }
+    .booking-item:nth-child(2) strong,
+    .booking-item:nth-child(3) strong { font-size: 0; }
+    .booking-item:nth-child(2) strong::after,
+    .booking-item:nth-child(3) strong::after { font-size: 1.05rem; }
+    .booking-item:nth-child(2) strong::after {
+      content: "Bis zu 6 G\00E4ste";
+    }
+    .booking-item:nth-child(3) strong::after {
+      content: "90 Euro f\00FCr 2 Personen \00B7 jede weitere Person 15 Euro";
+    }
+    .booking-cta { display: none; }
+
+    section { padding: 92px 0; }
+    .section-head { display: grid; grid-template-columns: .75fr 1fr; gap: 42px; align-items: end; margin-bottom: 38px; }
+
+    .small-title {
+      margin: 0 0 12px;
+      color: var(--gold);
+      font-size: .78rem;
+      font-weight: 900;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.15rem, 4vw, 4rem);
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -.045em;
+      color: var(--brown);
+      text-wrap: balance;
+    }
+
+    .section-head p { margin: 0; color: var(--muted); font-size: 1.06rem; }
+
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .fact {
+      background: #fffdf8;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 25px;
+      min-height: 136px;
+      box-shadow: 0 14px 34px rgba(43,31,20,.055);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .fact::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--green), var(--gold));
+    }
+
+    .fact span {
+      display: block;
+      margin-bottom: 9px;
+      color: var(--gold);
+      font-size: .74rem;
+      font-weight: 900;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    .fact strong { color: var(--brown); font-size: 1.04rem; line-height: 1.45; }
+
+    .stay-summary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .stay-summary div {
+      padding: 22px;
+      text-align: center;
+      background: var(--green);
+      color: var(--ivory);
+      border-radius: 20px;
+    }
+
+    .stay-summary strong {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 2rem;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .stay-summary span {
+      display: block;
+      margin-top: 7px;
+      color: rgba(251,247,239,.72);
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .story-wrap {
+      background: var(--green);
+      color: var(--ivory);
+      border-radius: 34px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 1fr .92fr;
+      gap: 0;
+      overflow: hidden;
+    }
+
+    .story-image {
+      min-height: 560px;
+      background: url('https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_5366703147171.jpg') center/cover no-repeat;
+      border-radius: 24px;
+    }
+
+    .story-text {
+      padding: clamp(34px, 5vw, 64px);
+      align-self: center;
+    }
+
+    .story-text .small-title { color: var(--sand); }
+    .story-text h2 { color: var(--ivory); }
+    .story-text p { color: rgba(251,247,239,.78); font-size: 1.08rem; margin: 24px 0 0; }
+
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 36px;
+    }
+
+    .highlight {
+      background: #fffdf8;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 25px;
+      min-height: 154px;
+      box-shadow: 0 12px 32px rgba(43,31,20,.05);
+    }
+
+    .highlight b {
+      display: inline-grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      margin-bottom: 18px;
+      border-radius: 50%;
+      background: var(--sage);
+      color: var(--green);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+
+    .highlight strong { display: block; color: var(--brown); margin-bottom: 8px; }
+    .highlight span { color: var(--muted); font-size: .95rem; }
+
+    .location-wrap {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 38px;
+      align-items: center;
+      padding: clamp(26px, 5vw, 56px);
+      border-radius: 32px;
+      background: #fffdf8;
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 48px rgba(43,31,20,.08);
+    }
+
+    .location-image {
+      width: 100%;
+      min-height: 390px;
+      border-radius: 24px;
+      background: url('assets/hero-weide.webp') center/cover no-repeat;
+    }
+
+    .location-copy p { color: var(--muted); }
+    .location-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .location-list span {
+      padding: 13px 16px;
+      border-left: 3px solid var(--gold);
+      background: var(--ivory);
+      color: var(--brown);
+      font-weight: 700;
+    }
+
+    .hotel-slider {
+      position: relative;
+      max-width: 1100px;
+      margin: auto;
+      overflow: hidden;
+      border-radius: 28px;
+      background: var(--green);
+      box-shadow: var(--shadow);
+    }
+
+    .hotel-slider img {
+      width: 100%;
+      height: min(68vw, 680px);
+      min-height: 420px;
+      object-fit: cover;
+    }
+
+    .slider-btn {
+      position: absolute;
+      z-index: 2;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 58px;
+      height: 58px;
+      border: 1px solid rgba(255,255,255,.5);
+      border-radius: 50%;
+      background: rgba(20,35,25,.72);
+      color: #fff;
+      font-size: 28px;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+    }
+
+    .slider-btn:hover { background: var(--green); }
+    .slider-btn.left { left: 20px; }
+    .slider-btn.right { right: 20px; }
+
+    .thumbs {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .thumbs img {
+      width: 100%;
+      height: 96px;
+      object-fit: cover;
+      border-radius: 13px;
+      border: 3px solid transparent;
+      opacity: .72;
+      cursor: pointer;
+      transition: opacity .2s ease, border-color .2s ease, transform .2s ease;
+    }
+
+    .thumbs img:hover,
+    .thumbs img.active {
+      opacity: 1;
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .cta {
+      padding: 0 0 86px;
+    }
+
+    .cta-box {
+      min-height: 360px;
+      border-radius: 34px;
+      background:
+        linear-gradient(90deg, rgba(36,59,44,.92), rgba(36,59,44,.72)),
+        url('https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_78366816018951.jpg') center/cover no-repeat;
+      color: var(--ivory);
+      display: grid;
+      align-items: center;
+      padding: clamp(34px, 7vw, 78px);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-box::after {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 1px solid rgba(251,247,239,.25);
+      border-radius: 24px;
+      pointer-events: none;
+    }
+
+    .cta-box h2 { color: var(--ivory); max-width: 740px; }
+    .cta-box p { color: rgba(251,247,239,.78); max-width: 760px; margin: 20px 0 30px; }
+
+    footer {
+      background: var(--brown);
+      color: rgba(251,247,239,.7);
+      padding: 34px 0;
+      font-size: .9rem;
+    }
+
+    .home-contact {
+      padding: 28px 0 82px;
+    }
+
+    .home-contact-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      padding: 30px 36px;
+      border-radius: 26px;
+      background: var(--green);
+      color: var(--ivory);
+      box-shadow: var(--shadow);
+    }
+
+    .home-contact-card span {
+      display: block;
+      color: var(--sand);
+      font-size: .75rem;
+      font-weight: 900;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .home-contact-card strong {
+      display: block;
+      margin-top: 5px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.65rem;
+      font-weight: 400;
+    }
+
+    .home-contact-card a {
+      white-space: nowrap;
+      font-size: 1.2rem;
+    }
+
+    .home #fakten,
+    .home #beschreibung,
+    .home #highlights,
+    .home #lage,
+    .home #galerie,
+    .home .cta { display: none; }
+
+    @media (max-width: 980px) {
+      .nav {
+        min-height: 154px;
+        align-items: flex-end;
+        padding-bottom: 16px;
+      }
+      .nav-links {
+        display: flex;
+        width: calc(100% - 250px);
+        margin-left: 250px;
+        gap: 20px;
+        overflow-x: auto;
+        white-space: nowrap;
+        scrollbar-width: none;
+      }
+      .nav-links::-webkit-scrollbar { display: none; }
+      .nav-links a {
+        flex: 0 0 auto;
+        padding: 9px 4px;
+      }
+      .brand { left: 20px; width: 220px; height: 220px; }
+      .hero { min-height: 680px; }
+      .booking-card { grid-template-columns: repeat(2, 1fr); }
+      .booking-item:nth-child(2) { border-right: 0; }
+      .booking-cta { grid-column: span 2; }
+      .section-head, .story-wrap, .location-wrap { grid-template-columns: 1fr; }
+      .facts { grid-template-columns: repeat(2, 1fr); }
+      .stay-summary { grid-template-columns: repeat(2, 1fr); }
+      .highlights { grid-template-columns: repeat(2, 1fr); }
+      .thumbs { grid-template-columns: repeat(4, 1fr); }
+      .story-image { min-height: 420px; }
+    }
+
+    @media (max-width: 620px) {
+      .container { width: min(100% - 26px, 1180px); }
+      .topbar-inner { flex-direction: column; align-items: flex-start; padding: 10px 0; gap: 4px; }
+      .nav {
+        min-height: 250px;
+        display: flex;
+        align-items: flex-end;
+        padding: 0 0 16px;
+      }
+      .brand {
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 170px;
+        height: 170px;
+      }
+      .nav .button { display: none; }
+      .nav-links {
+        display: flex;
+        width: 100%;
+        margin: 0;
+        padding: 0 13px;
+        margin-top: 182px;
+        justify-content: flex-start;
+        gap: 10px;
+        overflow-x: auto;
+        white-space: nowrap;
+        font-size: .82rem;
+      }
+      .nav-links a {
+        padding: 8px 13px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: #fffdf8;
+        color: var(--green);
+      }
+      .hero { min-height: 620px; }
+      .hero::after { inset: 10px; }
+      .hero-content { padding-bottom: 54px; }
+      .hero h1 { font-size: clamp(3rem, 16vw, 4.7rem); }
+      .booking-card, .facts, .highlights, .stay-summary { grid-template-columns: 1fr; }
+      .booking-card { width: calc(100% - 26px); }
+      .booking-item { border-right: 0; border-bottom: 1px solid var(--line); }
+      .booking-item:nth-child(3) { border-bottom: 1px solid var(--line); }
+      .booking-item:nth-child(4) { border-bottom: 0; }
+      .booking-cta { grid-column: auto; }
+      section { padding: 66px 0; }
+      .story-wrap { border-radius: 24px; }
+      .story-image { min-height: 320px; }
+      .location-image { min-height: 280px; }
+      .hotel-slider img { min-height: 320px; height: 72vw; }
+      .slider-btn { width: 46px; height: 46px; font-size: 22px; }
+      .slider-btn.left { left: 10px; }
+      .slider-btn.right { right: 10px; }
+      .thumbs { grid-template-columns: repeat(3, 1fr); }
+      .thumbs img { height: 76px; }
+      .home-contact-card { align-items: flex-start; flex-direction: column; padding: 25px; }
+      .home-contact-card a { width: 100%; }
+    }
+</style>
+</head>
+<body class="home">
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <span>Lohheider Str. 2 · 29699 · Walsrode, Lüneburger Heide, Niedersachsen, DE</span>
+      <span>Bewertung: 4.8 (16 Bew.)</span>
+    </div>
+  </div>
+
+  <header>
+    <div class="container nav">
+      <a class="brand" href="index.html" aria-label="Startseite">
+        <strong>Ferienhaus Mara</strong>
+        <span>L&uuml;neburger Heide</span>
+      </a>
+      <nav class="nav-links" aria-label="Hauptnavigation">
+        <a href="index.html">Startseite</a>
+        <a href="unterkunft.html">Unterkunft</a>
+        <a href="galerie.html">Galerie</a>
+        <a href="buchen.html">Buchen</a>
+      </nav>
+      <a class="button" href="buchen.html">Reisedaten eingeben</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-label="Hero-Bereich">
+      <div class="container hero-content">
+        <div class="kicker">Maisonette-Wohnung &middot; L&uuml;neburger Heide</div>
+        <h1>Ferienhaus Mara<br>in der L&uuml;neburger Heide</h1>
+        <p>80 m&sup2; Maisonette-Wohnung f&uuml;r bis zu 6 G&auml;ste mit zwei Schlafzimmern, eigenem Eingang und privatem Parkplatz nahe dem Erholungswald Eibia.</p>
+        <a class="button light" href="galerie.html">Bilder ansehen</a>
+      </div>
+    </section>
+
+    <aside class="booking-card" aria-label="Kurzfakten">
+      <div class="booking-item"><span>Wohnfl&auml;che</span><strong>80 m&sup2;</strong></div>
+      <div class="booking-item"><span>Belegung</span><strong>Bis zu 6 G&auml;ste</strong></div>
+      <div class="booking-item"><span>Preis</span><strong>90 Euro f&uuml;r 2 Personen &middot; jede weitere Person 15 Euro</strong></div>
+      <div class="booking-item"><span>Bewertung</span><strong>4.8 (16 Bew.)</strong></div>
+      <div class="booking-cta"><a class="button" href="https://www.ferienhausmiete.de/285700.htm" target="_blank" rel="noopener">Zur Quelle</a></div>
+    </aside>
+
+    <section id="fakten">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="small-title">Auf einen Blick</p>
+            <h2>Alles Wichtige f&uuml;r Ihren Aufenthalt</h2>
+          </div>
+          <p>Eine ruhige Maisonette-Wohnung in Walsrode mit zwei Schlafbereichen, eigenem Eingang und privatem Parkplatz nahe dem Erholungswald Eibia.</p>
+        </div>
+
+        <div class="stay-summary">
+          <div><strong>2</strong><span>Schlafzimmer</span></div>
+          <div><strong>1</strong><span>Badezimmer</span></div>
+          <div><strong>2</strong><span>Personen</span></div>
+          <div><strong>4,8</strong><span>16 Bewertungen</span></div>
+        </div>
+
+        <div class="facts">
+          <div class="fact"><span>Objekttyp</span><strong>Maisonette-Wohnung</strong></div>
+          <div class="fact"><span>Preis</span><strong>Ab 90 Euro pro Nacht &middot; jede weitere Person 15 Euro</strong></div>
+          <div class="fact"><span>Adresse</span><strong>Lohheider Str. 2, 29699 Walsrode</strong></div>
+          <div class="fact"><span>Region</span><strong>L&uuml;neburger Heide, Niedersachsen</strong></div>
+          <div class="fact"><span>Schlafbereich 1</span><strong>Doppelbett, Babybett und gro&szlig;er Kleiderschrank</strong></div>
+          <div class="fact"><span>Schlafbereich 2</span><strong>Ausgebauter Dachboden mit Doppelbett, erreichbar &uuml;ber eine Wendeltreppe</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="beschreibung">
+      <div class="container story-wrap">
+        <div class="story-image" role="img" aria-label="Schlafzimmer mit Doppelbett"></div>
+        <div class="story-text">
+          <p class="small-title">Beschreibung</p>
+          <h2>Ankommen und die Heide genie&szlig;en</h2>
+          <p>Die gro&szlig;z&uuml;gige Maisonette-Ferienwohnung liegt in unmittelbarer N&auml;he zum Erholungswald Eibia. Ein eigener Eingang und der private Parkplatz sorgen f&uuml;r eine unkomplizierte, unabh&auml;ngige Anreise.</p>
+          <p>Im ersten Schlafzimmer stehen ein Doppelbett, ein Babybett und ein gro&szlig;er Kleiderschrank bereit. Der zweite Schlafbereich befindet sich im ausgebauten Dachboden, ist &uuml;ber eine Wendeltreppe erreichbar und bietet ein weiteres Doppelbett.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="highlights">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="small-title">Highlights</p>
+            <h2>Was den Aufenthalt besonders macht</h2>
+          </div>
+          <p>Komfort, Privatsph&auml;re und die direkte N&auml;he zur Natur machen die Unterkunft zu einem angenehmen Ausgangspunkt f&uuml;r erholsame Tage in der L&uuml;neburger Heide.</p>
+        </div>
+
+        <div class="highlights">
+          <div class="highlight"><b>1</b><strong>Maisonette-Wohnung</strong><span>Gro&szlig;z&uuml;gige Unterkunft mit zwei getrennten Schlafbereichen.</span></div>
+          <div class="highlight"><b>2</b><strong>Eigener Eingang</strong><span>Mehr Privatsph&auml;re und ein unabh&auml;ngiges Ankommen.</span></div>
+          <div class="highlight"><b>3</b><strong>Parkplatz inklusive</strong><span>Privater Parkplatz direkt für die Unterkunft.</span></div>
+          <div class="highlight"><b>4</b><strong>Erholungswald Eibia</strong><span>Spazierwege und Natur liegen in unmittelbarer N&auml;he.</span></div>
+          <div class="highlight"><b>5</b><strong>Familienfreundlich</strong><span>Babybett und gro&szlig;er Kleiderschrank im ersten Schlafzimmer.</span></div>
+          <div class="highlight"><b>6</b><strong>Dachboden-Schlafzimmer</strong><span>Gem&uuml;tlicher zweiter Schlafbereich &uuml;ber eine Wendeltreppe.</span></div>
+          <div class="highlight"><b>7</b><strong>Zwei Doppelbetten</strong><span>Je ein Doppelbett im unteren und oberen Schlafbereich.</span></div>
+          <div class="highlight"><b>8</b><strong>Sehr gut bewertet</strong><span>4,8 von 5 Punkten aus 16 Bewertungen.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="lage">
+      <div class="container location-wrap">
+        <div class="location-image" role="img" aria-label="Erholungswald bei Walsrode"></div>
+        <div class="location-copy">
+          <p class="small-title">Lage &amp; Umgebung</p>
+          <h2>Ruhe und Natur direkt vor der T&uuml;r</h2>
+          <p>Das Ferienhaus liegt in Walsrode in der L&uuml;neburger Heide. Der nahe Erholungswald Eibia bietet ideale Bedingungen f&uuml;r Spazierg&auml;nge, kleine Auszeiten im Gr&uuml;nen und entspannte Urlaubstage.</p>
+          <div class="location-list">
+            <span>Lohheider Str. 2, 29699 Walsrode</span>
+            <span>Unmittelbare N&auml;he zum Erholungswald Eibia</span>
+            <span>Privater Parkplatz an der Unterkunft</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-label="Weitere Seiten">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="small-title">Mehr entdecken</p>
+            <h2>Alle Informationen auf einen Blick</h2>
+          </div>
+          <p>Die Inhalte sind jetzt übersichtlich auf eigene Seiten verteilt. Wählen Sie den Bereich, den Sie als Nächstes ansehen möchten.</p>
+        </div>
+        <div class="facts">
+          <a class="fact" href="unterkunft.html"><span>Unterkunft</span><strong>Räume, Ausstattung und Lage ausführlich entdecken</strong></a>
+          <a class="fact" href="galerie.html"><span>Galerie</span><strong>Alle 25 Objektbilder in einer eigenen Bildergalerie ansehen</strong></a>
+          <a class="fact" href="buchen.html"><span>Buchen</span><strong>Preise, Eckdaten und Verfügbarkeit prüfen</strong></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-contact" aria-label="Direkter Kontakt">
+      <div class="container">
+        <div class="home-contact-card">
+          <div>
+            <span>Ihre Ansprechpartnerin</span>
+            <strong>Marita Schmitz</strong>
+          </div>
+          <a class="button light" href="tel:+491723609774">+49 172 3609774 anrufen</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="galerie">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="small-title">Galerie</p>
+            <h2>Ferienhaus Mara in Bildern</h2>
+          </div>
+          <p>Entdecken Sie Schlafbereiche, Wohnr&auml;ume, Terrasse, Haus und Garten. Mit den Pfeilen oder Vorschaubildern wechseln Sie durch die Galerie.</p>
+        </div>
+
+        <div class="hotel-slider">
+          <button class="slider-btn left" type="button" onclick="changeSlide(-1)" aria-label="Vorheriges Bild">&#10094;</button>
+          <img id="sliderImage" src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_81029433147171.jpg" alt="Terrasse des Ferienhauses">
+          <button class="slider-btn right" type="button" onclick="changeSlide(1)" aria-label="N&auml;chstes Bild">&#10095;</button>
+        </div>
+        <div class="thumbs" aria-label="Galerie-Vorschaubilder">
+          <img class="active" src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_81029433147171.jpg" alt="Terrasse" onclick="setSlide(0)">
+          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_5366703147171.jpg" alt="Schlafzimmer" onclick="setSlide(1)">
+          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_78366816018951.jpg" alt="Au&szlig;enansicht" onclick="setSlide(2)">
+          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_17084226147171.jpg" alt="Innenansicht" onclick="setSlide(3)">
+          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_24585632147171.jpg" alt="Wohnbereich" onclick="setSlide(4)">
+          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_69836065128951.jpg" alt="Ausstattung" onclick="setSlide(5)">
+          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_31376263147171.jpg" alt="K&uuml;che" onclick="setSlide(6)">
+          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_38069065833061.jpg" alt="Essbereich" onclick="setSlide(7)">
+          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_59300845128951.jpg" alt="Weiterer Raum" onclick="setSlide(8)">
+          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_39519326147171.jpg" alt="Badezimmer" onclick="setSlide(9)">
+          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_63020875833061.jpg" alt="Dachgeschoss" onclick="setSlide(10)">
+          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_50869183147171.jpg" alt="Objektansicht 12" onclick="setSlide(11)">
+          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_86749355128951.jpg" alt="Objektansicht 13" onclick="setSlide(12)">
+          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_97050373147171.jpg" alt="Objektansicht 14" onclick="setSlide(13)">
+          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_48874788064961.jpg" alt="Objektansicht 15" onclick="setSlide(14)">
+          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_25374107128951.jpg" alt="Objektansicht 16" onclick="setSlide(15)">
+          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_15937773147171.jpg" alt="Objektansicht 17" onclick="setSlide(16)">
+          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_20724426538951.jpg" alt="Objektansicht 18" onclick="setSlide(17)">
+          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_24563931773761.jpg" alt="Objektansicht 19" onclick="setSlide(18)">
+          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_8686663147171.jpg" alt="Objektansicht 20" onclick="setSlide(19)">
+          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_9329606147171.jpg" alt="Objektansicht 21" onclick="setSlide(20)">
+          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_93860508128951.jpg" alt="Objektansicht 22" onclick="setSlide(21)">
+          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_24704618128951.jpg" alt="Objektansicht 23" onclick="setSlide(22)">
+          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_2184567128951.jpg" alt="Objektansicht 24" onclick="setSlide(23)">
+          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_29133987128951.jpg" alt="Erholungswald" onclick="setSlide(24)">
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="anfrage">
+      <div class="container cta-box">
+        <div>
+          <p class="small-title">Anfrage</p>
+          <h2>Jetzt Ihren Aufenthalt in Walsrode anfragen</h2>
+          <p>Ab 90 Euro pro Nacht, jede weitere Person 15 Euro. Pr&uuml;fen Sie freie Reisetermine und senden Sie eine unverbindliche Anfrage f&uuml;r das Ferienhaus Mara.</p>
+          <a class="button light" href="https://www.ferienhausmiete.de/285700.htm" target="_blank" rel="noopener">Verf&uuml;gbarkeit pr&uuml;fen</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">Ferienhaus Mara &middot; Lohheider Str. 2, 29699 Walsrode &middot; L&uuml;neburger Heide</div>
+  </footer>
+
+<script>
+const galleryImages = [
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_81029433147171.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_5366703147171.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_78366816018951.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_17084226147171.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_24585632147171.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_69836065128951.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_31376263147171.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_38069065833061.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_59300845128951.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_39519326147171.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_63020875833061.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_50869183147171.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_86749355128951.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_97050373147171.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_48874788064961.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_25374107128951.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_15937773147171.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_20724426538951.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_24563931773761.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_8686663147171.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_9329606147171.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_93860508128951.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_24704618128951.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_2184567128951.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_29133987128951.jpg'
+];
+const galleryAlts = [
+  'Terrasse des Ferienhauses',
+  'Schlafzimmer mit Doppelbett',
+  'Außenansicht des Ferienhauses',
+  'Innenansicht der Maisonette-Wohnung',
+  'Wohnbereich',
+  'Ausstattung der Unterkunft',
+  'Küche',
+  'Essbereich',
+  'Weiterer Wohnraum',
+  'Badezimmer',
+  'Schlafbereich im Dachgeschoss',
+  'Weitere Ansicht der Unterkunft 12',
+  'Weitere Ansicht der Unterkunft 13',
+  'Weitere Ansicht der Unterkunft 14',
+  'Weitere Ansicht der Unterkunft 15',
+  'Weitere Ansicht der Unterkunft 16',
+  'Weitere Ansicht der Unterkunft 17',
+  'Weitere Ansicht der Unterkunft 18',
+  'Weitere Ansicht der Unterkunft 19',
+  'Weitere Ansicht der Unterkunft 20',
+  'Weitere Ansicht der Unterkunft 21',
+  'Weitere Ansicht der Unterkunft 22',
+  'Weitere Ansicht der Unterkunft 23',
+  'Weitere Ansicht der Unterkunft 24',
+  'Erholungswald bei Walsrode'
+];
+let currentSlide=0;
+function updateSlide(){
+  const image = document.getElementById('sliderImage');
+  image.src = galleryImages[currentSlide];
+  image.alt = galleryAlts[currentSlide];
+  document.querySelectorAll('.thumbs img').forEach((thumb, index) => {
+    thumb.classList.toggle('active', index === currentSlide);
+  });
+}
+function changeSlide(d){currentSlide=(currentSlide+d+galleryImages.length)%galleryImages.length;updateSlide();}
+function setSlide(i){currentSlide=i;updateSlide();}
+</script>
+</body>
+
+</html>
