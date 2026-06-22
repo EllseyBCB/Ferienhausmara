@@ -216,7 +216,7 @@ section { padding: 82px 0; }
   width: 100%;
   height: min(68vw, 700px);
   min-height: 440px;
-  object-fit: contain;
+  object-fit: cover;
   background: #17251b;
 }
 .gallery-arrow {
