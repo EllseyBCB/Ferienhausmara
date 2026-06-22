@@ -3,8 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Landhaus-Auszeit in Walsrode | Ferienhausmiete.de</title>
-  <meta name="description" content="Ländlich-elegante Hotel-Webseite für eine VacationRental-Unterkunft in Walsrode, Lüneburger Heide." />
+  <title>Ferienhaus Mara in Walsrode | Lüneburger Heide</title>
+  <meta name="description" content="Ferienhaus Mara: 80 m² Maisonette-Wohnung für bis zu 6 Gäste in Walsrode, Lüneburger Heide – mit eigenem Eingang, Garten und privatem Parkplatz." />
+  <link rel="canonical" href="https://ellseybcb.github.io/Ferienhausmara/" />
+  <link rel="icon" type="image/png" href="LogoMara_transparent.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Ferienhaus Mara" />
+  <meta property="og:title" content="Ferienhaus Mara in Walsrode | Lüneburger Heide" />
+  <meta property="og:description" content="80 m² Maisonette-Wohnung für bis zu 6 Gäste in Walsrode, Lüneburger Heide – mit Garten, eigenem Eingang und privatem Parkplatz." />
+  <meta property="og:url" content="https://ellseybcb.github.io/Ferienhausmara/" />
+  <meta property="og:image" content="https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_81029433147171.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Ferienhaus Mara in Walsrode | Lüneburger Heide" />
+  <meta name="twitter:description" content="80 m² Maisonette-Wohnung für bis zu 6 Gäste in Walsrode, Lüneburger Heide." />
+  <meta name="twitter:image" content="https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_81029433147171.jpg" />
   <style>
     :root {
       --ivory: #fbf7ef;
@@ -149,6 +161,29 @@
       margin-right: 14px;
       font-size: 1.35rem;
     }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 46px; height: 46px;
+      padding: 0;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--ivory);
+      cursor: pointer;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 22px; height: 2px;
+      margin: 0 auto;
+      background: var(--green);
+      transition: transform .2s ease, opacity .2s ease;
+    }
+    header.nav-open .nav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    header.nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
+    header.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
     .hero {
       min-height: 765px;
@@ -369,7 +404,7 @@
 
     .story-image {
       min-height: 560px;
-      background: url('https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_5366703147171.jpg') center/cover no-repeat;
+      background: url('https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_5366703147171.jpg') center/cover no-repeat;
       border-radius: 24px;
     }
 
@@ -520,7 +555,7 @@
       border-radius: 34px;
       background:
         linear-gradient(90deg, rgba(36,59,44,.92), rgba(36,59,44,.72)),
-        url('https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_78366816018951.jpg') center/cover no-repeat;
+        url('https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_78366816018951.jpg') center/cover no-repeat;
       color: var(--ivory);
       display: grid;
       align-items: center;
@@ -595,26 +630,24 @@
     .home .cta { display: none; }
 
     @media (max-width: 980px) {
-      .nav {
-        min-height: 154px;
-        align-items: flex-end;
-        padding-bottom: 16px;
-      }
+      .nav { position: relative; min-height: auto; align-items: center; padding: 14px 0; }
+      .brand { position: static; transform: none; left: auto; top: auto; width: 92px; height: 92px; }
+      .nav-toggle { display: flex; margin-left: auto; }
+      .nav > .button { display: none; }
       .nav-links {
-        display: flex;
-        width: calc(100% - 250px);
-        margin-left: 250px;
-        gap: 20px;
-        overflow-x: auto;
-        white-space: nowrap;
-        scrollbar-width: none;
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        width: auto; margin: 0; padding: 6px 0;
+        flex-direction: column; align-items: stretch; gap: 0;
+        overflow: visible; white-space: normal;
+        background: var(--ivory);
+        border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+        box-shadow: 0 22px 44px rgba(43,31,20,.14);
+        display: none; z-index: 60; font-size: 1rem;
       }
-      .nav-links::-webkit-scrollbar { display: none; }
-      .nav-links a {
-        flex: 0 0 auto;
-        padding: 9px 4px;
-      }
-      .brand { left: 20px; width: 220px; height: 220px; }
+      header.nav-open .nav-links { display: flex; }
+      .nav-links a { width: 100%; padding: 14px 24px; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; }
+      .nav-links a:last-child { border-bottom: 0; }
       .hero { min-height: 680px; }
       .booking-card { grid-template-columns: repeat(2, 1fr); }
       .booking-item:nth-child(2) { border-right: 0; }
@@ -630,39 +663,7 @@
     @media (max-width: 620px) {
       .container { width: min(100% - 26px, 1180px); }
       .topbar-inner { flex-direction: column; align-items: flex-start; padding: 10px 0; gap: 4px; }
-      .nav {
-        min-height: 250px;
-        display: flex;
-        align-items: flex-end;
-        padding: 0 0 16px;
-      }
-      .brand {
-        top: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 170px;
-        height: 170px;
-      }
-      .nav .button { display: none; }
-      .nav-links {
-        display: flex;
-        width: 100%;
-        margin: 0;
-        padding: 0 13px;
-        margin-top: 182px;
-        justify-content: flex-start;
-        gap: 10px;
-        overflow-x: auto;
-        white-space: nowrap;
-        font-size: .82rem;
-      }
-      .nav-links a {
-        padding: 8px 13px;
-        border: 1px solid var(--line);
-        border-radius: 999px;
-        background: #fffdf8;
-        color: var(--green);
-      }
+      .brand { width: 84px; height: 84px; }
       .hero { min-height: 620px; }
       .hero::after { inset: 10px; }
       .hero-content { padding-bottom: 54px; }
@@ -702,7 +703,8 @@
         <strong>Ferienhaus Mara</strong>
         <span>L&uuml;neburger Heide</span>
       </a>
-      <nav class="nav-links" aria-label="Hauptnavigation">
+      <button class="nav-toggle" type="button" aria-label="Men&uuml; &ouml;ffnen" aria-expanded="false" aria-controls="primary-nav"><span></span><span></span><span></span></button>
+      <nav class="nav-links" id="primary-nav" aria-label="Hauptnavigation">
         <a href="index.html">Startseite</a>
         <a href="unterkunft.html">Unterkunft</a>
         <a href="galerie.html">Galerie</a>
@@ -850,35 +852,35 @@
 
         <div class="hotel-slider">
           <button class="slider-btn left" type="button" onclick="changeSlide(-1)" aria-label="Vorheriges Bild">&#10094;</button>
-          <img id="sliderImage" src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_81029433147171.jpg" alt="Terrasse des Ferienhauses">
+          <img id="sliderImage" src="https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_81029433147171.jpg" alt="Überdachte Terrasse mit Lounge-Möbeln und Gartenhaus" width="1200" height="800">
           <button class="slider-btn right" type="button" onclick="changeSlide(1)" aria-label="N&auml;chstes Bild">&#10095;</button>
         </div>
         <div class="thumbs" aria-label="Galerie-Vorschaubilder">
-          <img class="active" src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_81029433147171.jpg" alt="Terrasse" onclick="setSlide(0)">
-          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_5366703147171.jpg" alt="Schlafzimmer" onclick="setSlide(1)">
-          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_78366816018951.jpg" alt="Au&szlig;enansicht" onclick="setSlide(2)">
-          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_17084226147171.jpg" alt="Innenansicht" onclick="setSlide(3)">
-          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_24585632147171.jpg" alt="Wohnbereich" onclick="setSlide(4)">
-          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_69836065128951.jpg" alt="Ausstattung" onclick="setSlide(5)">
-          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_31376263147171.jpg" alt="K&uuml;che" onclick="setSlide(6)">
-          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_38069065833061.jpg" alt="Essbereich" onclick="setSlide(7)">
-          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_59300845128951.jpg" alt="Weiterer Raum" onclick="setSlide(8)">
-          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_39519326147171.jpg" alt="Badezimmer" onclick="setSlide(9)">
-          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_63020875833061.jpg" alt="Dachgeschoss" onclick="setSlide(10)">
-          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_50869183147171.jpg" alt="Objektansicht 12" onclick="setSlide(11)">
-          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_86749355128951.jpg" alt="Objektansicht 13" onclick="setSlide(12)">
-          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_97050373147171.jpg" alt="Objektansicht 14" onclick="setSlide(13)">
-          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_48874788064961.jpg" alt="Objektansicht 15" onclick="setSlide(14)">
-          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_25374107128951.jpg" alt="Objektansicht 16" onclick="setSlide(15)">
-          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_15937773147171.jpg" alt="Objektansicht 17" onclick="setSlide(16)">
-          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_20724426538951.jpg" alt="Objektansicht 18" onclick="setSlide(17)">
-          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_24563931773761.jpg" alt="Objektansicht 19" onclick="setSlide(18)">
-          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_8686663147171.jpg" alt="Objektansicht 20" onclick="setSlide(19)">
-          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_9329606147171.jpg" alt="Objektansicht 21" onclick="setSlide(20)">
-          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_93860508128951.jpg" alt="Objektansicht 22" onclick="setSlide(21)">
-          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_24704618128951.jpg" alt="Objektansicht 23" onclick="setSlide(22)">
-          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_2184567128951.jpg" alt="Objektansicht 24" onclick="setSlide(23)">
-          <img src="https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_29133987128951.jpg" alt="Erholungswald" onclick="setSlide(24)">
+          <img class="active" loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_81029433147171.jpg" alt="Überdachte Terrasse mit Lounge-Möbeln" onclick="setSlide(0)">
+          <img loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_5366703147171.jpg" alt="Schlafzimmer mit Doppelbett" onclick="setSlide(1)">
+          <img loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_78366816018951.jpg" alt="Außenansicht des Ferienhauses" onclick="setSlide(2)">
+          <img loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_17084226147171.jpg" alt="Innenansicht der Wohnung" onclick="setSlide(3)">
+          <img loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_24585632147171.jpg" alt="Wohnbereich mit Sitzgelegenheit" onclick="setSlide(4)">
+          <img loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_69836065128951.jpg" alt="Ausstattung der Unterkunft" onclick="setSlide(5)">
+          <img loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_31376263147171.jpg" alt="Küche" onclick="setSlide(6)">
+          <img loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_38069065833061.jpg" alt="Essbereich" onclick="setSlide(7)">
+          <img loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_59300845128951.jpg" alt="Weiterer Wohnraum" onclick="setSlide(8)">
+          <img loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_39519326147171.jpg" alt="Badezimmer" onclick="setSlide(9)">
+          <img loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_63020875833061.jpg" alt="Schlafbereich im Dachgeschoss" onclick="setSlide(10)">
+          <img loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_50869183147171.jpg" alt="Küche mit grauen Schränken und Kühlschrank" onclick="setSlide(11)">
+          <img loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_86749355128951.jpg" alt="Badezimmer mit Badewanne und separater Dusche" onclick="setSlide(12)">
+          <img loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_97050373147171.jpg" alt="Garten mit Blumenbeet und Rasenfläche" onclick="setSlide(13)">
+          <img loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_48874788064961.jpg" alt="Überdachte Terrasse mit Gasgrill" onclick="setSlide(14)">
+          <img loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_25374107128951.jpg" alt="Küchendetail mit Gewürzregal" onclick="setSlide(15)">
+          <img loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_15937773147171.jpg" alt="Schlafzimmer mit Spiegel-Kleiderschrank und Babybett" onclick="setSlide(16)">
+          <img loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_20724426538951.jpg" alt="Offene Holztreppe ins Obergeschoss" onclick="setSlide(17)">
+          <img loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_24563931773761.jpg" alt="Treppenaufgang mit Stufenmatten" onclick="setSlide(18)">
+          <img loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_8686663147171.jpg" alt="Außenbereich mit Rosenstrauch" onclick="setSlide(19)">
+          <img loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_9329606147171.jpg" alt="Gartendetail mit Clematis-Blüten" onclick="setSlide(20)">
+          <img loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_93860508128951.jpg" alt="Historischer Bunker im Erholungswald Eibia" onclick="setSlide(21)">
+          <img loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_24704618128951.jpg" alt="Waldweg im Erholungswald bei Walsrode" onclick="setSlide(22)">
+          <img loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_2184567128951.jpg" alt="Historische Wassermühle in der Umgebung" onclick="setSlide(23)">
+          <img loading="lazy" decoding="async" width="120" height="82" src="https://static.ferienhausmiete.de/pictures/162372/bilder_klein/162372_29133987128951.jpg" alt="Erholungswald bei Walsrode" onclick="setSlide(24)">
         </div>
       </div>
     </section>
@@ -901,31 +903,31 @@
 
 <script>
 const galleryImages = [
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_81029433147171.jpg',
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_5366703147171.jpg',
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_78366816018951.jpg',
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_17084226147171.jpg',
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_24585632147171.jpg',
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_69836065128951.jpg',
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_31376263147171.jpg',
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_38069065833061.jpg',
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_59300845128951.jpg',
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_39519326147171.jpg',
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_63020875833061.jpg',
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_50869183147171.jpg',
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_86749355128951.jpg',
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_97050373147171.jpg',
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_48874788064961.jpg',
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_25374107128951.jpg',
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_15937773147171.jpg',
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_20724426538951.jpg',
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_24563931773761.jpg',
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_8686663147171.jpg',
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_9329606147171.jpg',
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_93860508128951.jpg',
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_24704618128951.jpg',
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_2184567128951.jpg',
-  'https://static.ferienhausmiete.de/pictures/162372/bilder_original/162372_29133987128951.jpg'
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_81029433147171.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_5366703147171.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_78366816018951.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_17084226147171.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_24585632147171.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_69836065128951.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_31376263147171.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_38069065833061.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_59300845128951.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_39519326147171.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_63020875833061.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_50869183147171.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_86749355128951.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_97050373147171.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_48874788064961.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_25374107128951.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_15937773147171.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_20724426538951.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_24563931773761.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_8686663147171.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_9329606147171.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_93860508128951.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_24704618128951.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_2184567128951.jpg',
+  'https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_29133987128951.jpg'
 ];
 const galleryAlts = [
   'Terrasse des Ferienhauses',
@@ -939,19 +941,19 @@ const galleryAlts = [
   'Weiterer Wohnraum',
   'Badezimmer',
   'Schlafbereich im Dachgeschoss',
-  'Weitere Ansicht der Unterkunft 12',
-  'Weitere Ansicht der Unterkunft 13',
-  'Weitere Ansicht der Unterkunft 14',
-  'Weitere Ansicht der Unterkunft 15',
-  'Weitere Ansicht der Unterkunft 16',
-  'Weitere Ansicht der Unterkunft 17',
-  'Weitere Ansicht der Unterkunft 18',
-  'Weitere Ansicht der Unterkunft 19',
-  'Weitere Ansicht der Unterkunft 20',
-  'Weitere Ansicht der Unterkunft 21',
-  'Weitere Ansicht der Unterkunft 22',
-  'Weitere Ansicht der Unterkunft 23',
-  'Weitere Ansicht der Unterkunft 24',
+  'Küche mit grauen Schränken und Kühlschrank',
+  'Badezimmer mit Badewanne und separater Dusche',
+  'Garten mit Blumenbeet und Rasenfläche',
+  'Überdachte Terrasse mit Gasgrill',
+  'Küchendetail mit Gewürzregal und Küchenutensilien',
+  'Schlafzimmer mit Spiegel-Kleiderschrank, Doppelbett und Babybett',
+  'Offene Holztreppe ins Obergeschoss',
+  'Treppenaufgang mit Stufenmatten',
+  'Außenbereich mit Rosenstrauch',
+  'Gartendetail mit Clematis-Blüten',
+  'Historischer Bunker im Erholungswald Eibia',
+  'Waldweg im Erholungswald bei Walsrode',
+  'Historische Wassermühle in der Umgebung',
   'Erholungswald bei Walsrode'
 ];
 let currentSlide=0;
@@ -966,6 +968,7 @@ function updateSlide(){
 function changeSlide(d){currentSlide=(currentSlide+d+galleryImages.length)%galleryImages.length;updateSlide();}
 function setSlide(i){currentSlide=i;updateSlide();}
 </script>
+<script src="nav.js"></script>
 </body>
 
 </html>
