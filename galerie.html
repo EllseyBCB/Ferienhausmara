@@ -12,11 +12,11 @@
   <meta property="og:title" content="Galerie | Ferienhaus Mara">
   <meta property="og:description" content="Räume, Ausstattung, Außenbereich und die grüne Umgebung des Ferienhaus Mara in Walsrode.">
   <meta property="og:url" content="https://ellseybcb.github.io/Ferienhausmara/galerie.html">
-  <meta property="og:image" content="https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_81029433147171.jpg">
+  <meta property="og:image" content="https://ellseybcb.github.io/Ferienhausmara/assets/gallery/81029433147171.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Galerie | Ferienhaus Mara">
   <meta name="twitter:description" content="Räume, Ausstattung, Außenbereich und die grüne Umgebung des Ferienhaus Mara in Walsrode.">
-  <meta name="twitter:image" content="https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_81029433147171.jpg">
+  <meta name="twitter:image" content="https://ellseybcb.github.io/Ferienhausmara/assets/gallery/81029433147171.jpg">
   <link rel="stylesheet" href="ferienhaus-mara-pages.css?v=6">
 </head>
 <body>
@@ -36,7 +36,7 @@
   </header>
 
   <main>
-    <section class="page-hero" style="--hero-image:url('https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_81029433147171.jpg')">
+    <section class="page-hero" style="--hero-image:url('assets/gallery/81029433147171.jpg')">
       <div class="container page-hero-content">
         <p class="eyebrow">Bildergalerie</p>
         <h1>Ferienhaus Mara in Bildern</h1>
@@ -52,7 +52,7 @@
         </div>
         <div class="gallery-slider">
           <button class="gallery-arrow prev" type="button" aria-label="Vorheriges Bild">&#10094;</button>
-          <img id="galleryImage" src="https://static.ferienhausmiete.de/pictures/162372/bilder_gross/162372_81029433147171.jpg" alt="Überdachte Terrasse mit Lounge-Möbeln und Gartenhaus" width="1200" height="800" style="cursor: zoom-in" role="button" tabindex="0">
+          <img id="galleryImage" src="assets/gallery/81029433147171.jpg" alt="Überdachte Terrasse mit Lounge-Möbeln und Gartenhaus" width="1200" height="800" style="cursor: zoom-in" role="button" tabindex="0">
           <button class="gallery-arrow next" type="button" aria-label="Nächstes Bild">&#10095;</button>
           <span class="gallery-counter" id="galleryCounter">1 / 25</span>
         </div>
@@ -106,7 +106,7 @@
     ];
 
     function imgUrl(id, size) {
-      return 'https://static.ferienhausmiete.de/pictures/162372/' + size + '/162372_' + id + '.jpg';
+      return (size === 'bilder_klein' ? 'assets/gallery/thumbs/' : 'assets/gallery/') + id + '.jpg';
     }
 
     const slide = document.getElementById('galleryImage');
