@@ -48,7 +48,7 @@ img { display: block; max-width: 100%; }
   backdrop-filter: blur(14px);
 }
 .nav {
-  min-height: 94px;
+  min-height: 86px;
   display: flex;
   align-items: center;
   gap: 34px;
@@ -64,9 +64,10 @@ img { display: block; max-width: 100%; }
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 30px;
   margin-left: auto;
-  font-weight: 750;
+  font-size: 1.12rem;
+  font-weight: 700;
   color: #5d4633;
 }
 .nav-links a { padding: 9px 0; border-bottom: 2px solid transparent; }
