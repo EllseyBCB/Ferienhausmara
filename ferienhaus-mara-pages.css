@@ -413,6 +413,22 @@ section { padding: 82px 0; }
   .cal-title { font-size: 1.4rem; }
 }
 
+.amenity-photo { margin: 34px 0 0; }
+.amenity-photo img {
+  width: 100%;
+  height: clamp(220px, 38vw, 360px);
+  object-fit: cover;
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+}
+.amenity-photo figcaption {
+  margin-top: 13px;
+  text-align: center;
+  color: var(--muted);
+  font-size: .9rem;
+  font-style: italic;
+}
+
 footer {
   padding: 34px 0;
   background: var(--brown);
