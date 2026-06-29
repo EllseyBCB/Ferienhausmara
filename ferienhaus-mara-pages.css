@@ -185,6 +185,8 @@ section { padding: 82px 0; }
   border-left: 3px solid var(--gold);
   font-weight: 700;
 }
+.detail-list.detail-prose div { font-weight: 500; line-height: 1.55; }
+.detail-list.detail-prose strong { color: var(--brown); }
 
 .gallery-grid {
   display: grid;
