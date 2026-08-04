@@ -279,16 +279,6 @@
     .booking-item:nth-child(2n) { border-right: 0; }
     .booking-item:nth-child(3),
     .booking-item:nth-child(4) { border-bottom: 0; }
-    .booking-item:nth-child(2) strong,
-    .booking-item:nth-child(3) strong { font-size: 0; }
-    .booking-item:nth-child(2) strong::after,
-    .booking-item:nth-child(3) strong::after { font-size: 1.05rem; }
-    .booking-item:nth-child(2) strong::after {
-      content: "Bis zu 6 G\00E4ste";
-    }
-    .booking-item:nth-child(3) strong::after {
-      content: "80 Euro f\00FCr 2 Personen \00B7 jede weitere Person 15 Euro";
-    }
     .booking-cta { display: none; }
 
     section { padding: 92px 0; }
@@ -691,6 +681,7 @@
       .home-contact-card a { width: 100%; }
     }
 </style>
+  <script src="inhalte.js"></script>
 </head>
 <body class="home">
   <div class="topbar">
@@ -729,8 +720,8 @@
 
     <aside class="booking-card" aria-label="Kurzfakten">
       <div class="booking-item"><span>Wohnfläche</span><strong>80 m²</strong></div>
-      <div class="booking-item"><span>Belegung</span><strong>Bis zu 6 Gäste</strong></div>
-      <div class="booking-item"><span>Preis</span><strong>80 Euro für 2 Personen · jede weitere Person 15 Euro</strong></div>
+      <div class="booking-item"><span>Belegung</span><strong>Bis zu <span data-wert="maxGaeste">6</span> Gäste</strong></div>
+      <div class="booking-item"><span>Preis</span><strong><span data-wert="preisProNacht">80</span> Euro für 2 Personen · jede weitere Person <span data-wert="preisWeiterePerson">15</span> Euro</strong></div>
       <div class="booking-item"><span>Bewertung</span><strong>4.8 (16 Bew.)</strong></div>
       <div class="booking-cta"><a class="button" href="https://www.ferienhausmiete.de/285700.htm" target="_blank" rel="noopener">Zur Quelle</a></div>
     </aside>
@@ -754,7 +745,7 @@
 
         <div class="facts">
           <div class="fact"><span>Objekttyp</span><strong>Maisonette-Wohnung</strong></div>
-          <div class="fact"><span>Preis</span><strong>Ab 80 Euro pro Nacht · jede weitere Person 15 Euro</strong></div>
+          <div class="fact"><span>Preis</span><strong>Ab <span data-wert="preisProNacht">80</span> Euro pro Nacht · jede weitere Person <span data-wert="preisWeiterePerson">15</span> Euro</strong></div>
           <div class="fact"><span>Adresse</span><strong>Lohheider Str. 2, 29699 Walsrode</strong></div>
           <div class="fact"><span>Region</span><strong>Lüneburger Heide, Niedersachsen</strong></div>
           <div class="fact"><span>Schlafbereich 1</span><strong>Doppelbett, Babybett und großer Kleiderschrank</strong></div>
@@ -891,7 +882,7 @@
         <div>
           <p class="small-title">Anfrage</p>
           <h2>Jetzt Ihren Aufenthalt in Walsrode anfragen</h2>
-          <p>Ab 80 Euro pro Nacht, jede weitere Person 15 Euro. Prüfen Sie freie Reisetermine und senden Sie eine unverbindliche Anfrage für das Ferienhaus Mara.</p>
+          <p>Ab <span data-wert="preisProNacht">80</span> Euro pro Nacht, jede weitere Person <span data-wert="preisWeiterePerson">15</span> Euro. Prüfen Sie freie Reisetermine und senden Sie eine unverbindliche Anfrage für das Ferienhaus Mara.</p>
           <a class="button light" href="buchen.html#kalender">Verfügbarkeit prüfen</a>
         </div>
       </div>
