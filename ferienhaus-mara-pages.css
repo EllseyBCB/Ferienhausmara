@@ -530,3 +530,15 @@ footer {
   .gallery-thumbs { grid-template-columns: repeat(3, 1fr); }
   .gallery-thumbs img { height: 72px; }
 }
+
+/* Werte aus inhalte.js sollen immer wie der Text drumherum aussehen */
+[data-wert],
+.booking-card [data-wert],
+.price-box [data-wert] {
+  display: inline;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+  text-transform: none;
+}

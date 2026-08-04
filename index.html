@@ -265,7 +265,7 @@
       min-height: 148px;
     }
 
-    .booking-item span {
+    .booking-item > span {
       display: block;
       color: var(--gold);
       font-size: .78rem;
@@ -280,6 +280,16 @@
     .booking-item:nth-child(3),
     .booking-item:nth-child(4) { border-bottom: 0; }
     .booking-cta { display: none; }
+
+    /* Werte aus inhalte.js sollen immer wie der Text drumherum aussehen */
+    [data-wert], .booking-item [data-wert], .fact [data-wert] {
+      display: inline;
+      margin: 0;
+      font: inherit;
+      color: inherit;
+      letter-spacing: inherit;
+      text-transform: none;
+    }
 
     section { padding: 92px 0; }
     .section-head { display: grid; grid-template-columns: .75fr 1fr; gap: 42px; align-items: end; margin-bottom: 38px; }
@@ -333,7 +343,7 @@
       background: linear-gradient(90deg, var(--green), var(--gold));
     }
 
-    .fact span {
+    .fact > span {
       display: block;
       margin-bottom: 9px;
       color: var(--gold);
