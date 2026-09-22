@@ -69,9 +69,9 @@
   .felder{display:flex;flex-direction:column;gap:8px;min-width:0}
   label{display:block;font-size:.68rem;font-weight:800;letter-spacing:.1em;
         text-transform:uppercase;color:var(--muted);margin-bottom:3px}
-  input[type=text],select{width:100%;padding:9px 11px;border:1px solid var(--line);
+  input[type=text],input[type=password],select{width:100%;padding:9px 11px;border:1px solid var(--line);
         border-radius:9px;background:var(--ground);color:var(--ink);font:inherit;font-size:.92rem}
-  input[type=text]:focus,select:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:var(--gold)}
+  input[type=text]:focus,input[type=password]:focus,select:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:var(--gold)}
   .zwei{display:grid;grid-template-columns:1fr 190px;gap:10px}
   .datei{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
          font-size:.74rem;color:var(--muted);overflow-wrap:anywhere}
@@ -87,6 +87,17 @@
   .ablage.ziel{border-color:var(--gold);color:var(--ink)}
   .ablage strong{display:block;margin-bottom:5px;color:var(--ink);font-size:1.02rem}
 
+  .verbindung{margin:20px 0 0;padding:16px 18px;border:1px solid var(--line);
+              border-radius:15px;background:var(--paper);box-shadow:var(--shadow)}
+  .verbindung h3{margin:0 0 4px;font-family:Georgia,serif;font-weight:400;font-size:1.12rem}
+  .verbindung p{margin:0 0 12px;color:var(--muted);font-size:.88rem}
+  .vzeile{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end}
+  .vstatus{display:flex;align-items:center;gap:8px;font-size:.9rem;font-weight:600}
+  .ampel{width:9px;height:9px;border-radius:50%;background:var(--muted);flex:none}
+  .ampel.an{background:var(--neu)}
+  .warnbalken{margin-top:7px;padding:7px 10px;border-radius:8px;background:var(--chip);
+              color:var(--rot);font-size:.78rem;line-height:1.4}
+  @media (max-width:620px){ .vzeile{grid-template-columns:1fr} }
   .fehler{margin-top:12px;padding:12px 15px;border-radius:11px;
           background:var(--chip);color:var(--rot);font-size:.9rem}
   .fehler:empty{display:none}
@@ -104,15 +115,50 @@
   <header>
     <p class="eyebrow">Ferienhaus Mara · Walsrode</p>
     <h1>Fotos der Galerie verwalten</h1>
-    <p class="lede">Bilder austauschen, löschen, neue hinzufügen, sortieren und benennen. Am Ende lädst du ein fertiges Paket herunter – die Dateien haben dann schon die richtigen Namen.</p>
+    <p class="lede">Bilder austauschen, löschen, neue hinzufügen, sortieren und benennen. Einmal mit GitHub verbunden, genügt danach ein Klick – sonst bekommst du ein fertiges Paket zum Hochladen.</p>
   </header>
 
   <div class="leiste">
     <div class="stand" id="stand">Noch keine Änderungen.</div>
     <button class="knopf still" id="zuruecksetzen" type="button">Alles zurücksetzen</button>
-    <button class="knopf" id="herunterladen" type="button" disabled>Paket herunterladen</button>
+    <button class="knopf still" id="herunterladen" type="button" disabled>Paket herunterladen</button>
+    <button class="knopf" id="uebertragen" type="button" disabled hidden>Zu GitHub übertragen</button>
   </div>
   <div class="fehler" id="fehler"></div>
+
+  <div class="verbindung">
+    <h3>Direkt mit GitHub verbinden <span style="font-weight:400;color:var(--muted);font-size:.85rem">(einmalig einrichten)</span></h3>
+    <p>Danach genügt ein Klick – kein Herunterladen, kein Entpacken, kein Hochladen mehr.</p>
+    <div class="vstatus" id="vstatus"><span class="ampel" id="ampel"></span><span id="vtext">Nicht verbunden – es wird der ZIP-Weg benutzt.</span></div>
+    <div id="vformular" style="margin-top:12px">
+      <div class="vzeile">
+        <div>
+          <label for="token">Zugangsschlüssel von GitHub (Personal Access Token)</label>
+          <input type="password" id="token" autocomplete="off" placeholder="github_pat_…">
+        </div>
+        <button class="knopf" id="verbinden" type="button">Verbinden</button>
+      </div>
+      <div class="warnbalken">Der Schlüssel wird nur in diesem Browser gespeichert und ausschließlich an GitHub gesendet – an sonst niemanden.</div>
+      <details style="margin-top:12px">
+        <summary style="cursor:pointer;font-weight:700;font-size:.9rem">Schlüssel erstellen – Anleitung in 7 Schritten</summary>
+        <ol style="margin:10px 0 0;padding-left:20px;font-size:.88rem;color:var(--muted);line-height:1.7">
+          <li>Bei GitHub anmelden und diese Seite öffnen:<br>
+              <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener"
+                 style="color:var(--gold);text-decoration:underline;overflow-wrap:anywhere">github.com/settings/personal-access-tokens/new</a></li>
+          <li><strong>Token name:</strong> z.&nbsp;B. <code>Fotoverwaltung</code></li>
+          <li><strong>Expiration:</strong> z.&nbsp;B. 1 Jahr (danach einfach neu erstellen)</li>
+          <li><strong>Repository access:</strong> „Only select repositories" → <code>Ferienhaus-Mara-Website</code> auswählen</li>
+          <li><strong>Permissions → Repository permissions → Contents:</strong> auf <strong>„Read and write"</strong> stellen. Sonst nichts ändern.</li>
+          <li>Unten auf <strong>„Generate token"</strong> klicken</li>
+          <li>Den angezeigten Schlüssel <strong>sofort kopieren</strong> (er wird nur einmal gezeigt) und oben einfügen → <strong>Verbinden</strong></li>
+        </ol>
+        <p style="margin:10px 0 0;font-size:.84rem;color:var(--muted)">Der Schlüssel gilt nur für dieses eine Repository und nur für Dateien. Geht er verloren, bei GitHub löschen und einen neuen erstellen.</p>
+      </details>
+    </div>
+    <div id="vgetrennt" hidden style="margin-top:10px">
+      <button class="knopf still" id="trennen" type="button">Verbindung trennen</button>
+    </div>
+  </div>
 
   <p class="hinweis"><strong>So läuft es:</strong> Alles passiert hier auf deinem Gerät – es wird nichts hochgeladen. Wenn du fertig bist, bekommst du eine ZIP-Datei. Die entpackst du und lädst den Inhalt bei GitHub hoch. Eine Anleitung liegt im Paket bei.</p>
 
@@ -229,6 +275,23 @@
 
   var MAX_GROSS = 1600, MAX_KLEIN = 420;
 
+  /* Diese Bilder stehen zusaetzlich an festen Stellen der Webseite.
+     Werden sie aus der Galerie genommen, bleibt die Datei erhalten -
+     sonst waere die andere Stelle kaputt. */
+  var SONDER = {
+    "81029433147171.jpg": "Titelbild der Galerie-Seite und Vorschau bei Google",
+    "78366816018951.jpg": "Titelbild der Buchen-Seite und im Impressum",
+    "63020875833061.jpg": "Titelbild der Unterkunft-Seite",
+    "5366703147171.jpg":  "Foto \u201eErstes Schlafzimmer\u201c auf der Unterkunft-Seite",
+    "24585632147171.jpg": "Foto \u201eWohnbereich\u201c auf der Unterkunft-Seite",
+    "48874788064961.jpg": "Foto \u201eTerrasse\u201c auf der Unterkunft-Seite",
+    "29133987128951.jpg": "Foto \u201eErholungswald\u201c und Titelbild Datenschutz"
+  };
+
+  var GH = { besitzer: 'MaikeLesperance', repo: 'Ferienhaus-Mara-Website', zweig: 'main' };
+  var token = '';
+  try { token = localStorage.getItem('fm_gh_token') || ''; } catch (e) { token = ''; }
+
   var liste = START.map(function (b) {
     return {
       datei: b.datei, text: b.text, kategorie: b.kategorie,
@@ -322,6 +385,7 @@
             '<input type="text" id="k' + index + '" list="katliste" value="' + String(b.kategorie).replace(/"/g, '&quot;') + '"></div>' +
             '<div><label>Dateiname</label><div class="datei">' + b.datei + '</div></div>' +
           '</div>' +
+          (SONDER[b.datei] ? '<div class="warnbalken">Dieses Bild wird auch hier verwendet: ' + SONDER[b.datei] + '. Beim L\u00f6schen verschwindet es nur aus der Galerie \u2013 die Bilddatei bleibt erhalten.</div>' : '') +
         '</div>' +
         '<div class="tasten">' +
           '<button class="mini" type="button" data-tun="ersetzen">Bild ersetzen</button>' +
@@ -526,13 +590,14 @@
     setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 1500);
   }
 
-  elLaden.addEventListener('click', function () {
+  /* Stellt zusammen, was uebertragen bzw. gepackt wird. null = abgebrochen. */
+  function paketInhalt() {
     melde('');
     var aktiv = liste.filter(function (b) { return !b.weg; });
-    if (!aktiv.length) { melde('Es ist kein einziges Bild mehr in der Galerie – bitte mindestens eines behalten.'); return; }
+    if (!aktiv.length) { melde('Es ist kein einziges Bild mehr in der Galerie – bitte mindestens eines behalten.'); return null; }
     var ohneText = aktiv.filter(function (b) { return !b.text || b.text.trim().length < 3; });
     if (ohneText.length) {
-      if (!confirm(ohneText.length + ' Bild(er) haben noch keine Beschreibung. Das ist schlecht für Google. Trotzdem fortfahren?')) return;
+      if (!confirm(ohneText.length + ' Bild(er) haben noch keine Beschreibung. Das ist schlecht für Google. Trotzdem fortfahren?')) return null;
     }
 
     var eintraege = [], neueDat = [];
@@ -548,6 +613,13 @@
     var enc = new TextEncoder();
     eintraege.push({ pfad: 'galerie-daten.js', daten: enc.encode(datenDatei(aktiv)) });
     eintraege.push({ pfad: 'ANLEITUNG.txt', daten: enc.encode(anleitung(aktiv, neueDat, wegDat)) });
+    return { eintraege: eintraege, aktiv: aktiv };
+  }
+
+  elLaden.addEventListener('click', function () {
+    var vorbereitet = paketInhalt();
+    if (!vorbereitet) return;
+    var eintraege = vorbereitet.eintraege;
 
     elLaden.disabled = true; elLaden.textContent = 'Paket wird gebaut …';
     setTimeout(function () {
@@ -568,6 +640,159 @@
     var o = document.createElement('option'); o.value = k; dl.appendChild(o);
   });
   document.body.appendChild(dl);
+
+
+  /* ============ Verbindung zu GitHub ============ */
+  var elAmpel = document.getElementById('ampel');
+  var elVtext = document.getElementById('vtext');
+  var elVform = document.getElementById('vformular');
+  var elVgetr = document.getElementById('vgetrennt');
+  var elUeber = document.getElementById('uebertragen');
+
+  function verbindungAnzeigen() {
+    var an = !!token;
+    elAmpel.classList.toggle('an', an);
+    elVtext.textContent = an
+      ? 'Verbunden mit ' + GH.besitzer + '/' + GH.repo
+      : 'Nicht verbunden – es wird der ZIP-Weg benutzt.';
+    elVform.hidden = an;
+    elVgetr.hidden = !an;
+    elUeber.hidden = !an;
+    elUeber.disabled = !an;
+  }
+
+  document.getElementById('verbinden').addEventListener('click', function () {
+    var t = document.getElementById('token').value.trim();
+    if (!t) { melde('Bitte zuerst den Zugangsschlüssel einfügen.'); return; }
+    melde('Schlüssel wird geprüft …');
+    ghAnfrage('/repos/' + GH.besitzer + '/' + GH.repo, {}, t)
+      .then(function (repo) {
+        if (!repo.permissions || !repo.permissions.push) {
+          melde('Der Schlüssel darf in diesem Repository nichts ändern. Bitte beim Erstellen „Contents: Read and write" auswählen.');
+          return;
+        }
+        token = t;
+        try { localStorage.setItem('fm_gh_token', token); } catch (e) {}
+        document.getElementById('token').value = '';
+        melde(''); verbindungAnzeigen();
+      })
+      .catch(function (e) {
+        melde(e.message.indexOf('401') === 0
+          ? 'Der Schlüssel wurde nicht akzeptiert. Bitte prüfen, ob er vollständig kopiert wurde.'
+          : e.message.indexOf('404') === 0
+            ? 'Repository nicht gefunden. Hat der Schlüssel Zugriff auf ' + GH.besitzer + '/' + GH.repo + '?'
+            : 'Verbindung fehlgeschlagen – ' + e.message);
+      });
+  });
+
+  document.getElementById('trennen').addEventListener('click', function () {
+    token = '';
+    try { localStorage.removeItem('fm_gh_token'); } catch (e) {}
+    verbindungAnzeigen(); melde('');
+  });
+
+  function ghAnfrage(pfad, opts, schluessel) {
+    opts = opts || {};
+    return fetch('https://api.github.com' + pfad, {
+      method: opts.method || 'GET',
+      headers: {
+        'Accept': 'application/vnd.github+json',
+        'Authorization': 'Bearer ' + (schluessel || token),
+        'X-GitHub-Api-Version': '2022-11-28',
+        'Content-Type': 'application/json'
+      },
+      body: opts.body || undefined
+    }).then(function (r) {
+      return r.text().then(function (txt) {
+        if (!r.ok) {
+          var m = ''; try { m = (JSON.parse(txt).message || ''); } catch (e) {}
+          throw new Error(r.status + ' ' + m);
+        }
+        return txt ? JSON.parse(txt) : {};
+      });
+    });
+  }
+
+  function base64Von(bytes) {
+    var teile = [], stueck = 0x8000;
+    for (var i = 0; i < bytes.length; i += stueck) {
+      teile.push(String.fromCharCode.apply(null, bytes.subarray(i, i + stueck)));
+    }
+    return btoa(teile.join(''));
+  }
+
+  elUeber.addEventListener('click', function () {
+    var vorbereitet = paketInhalt();
+    if (!vorbereitet) return;
+    var dateien = vorbereitet.eintraege.filter(function (e) { return e.pfad !== 'ANLEITUNG.txt'; });
+
+    elUeber.disabled = true; elLaden.disabled = true;
+    var urspruenglich = elUeber.textContent;
+
+    function schritt(t) { elUeber.textContent = t; }
+
+    var basisSha, baumSha;
+    schritt('Verbinde …');
+    ghAnfrage('/repos/' + GH.besitzer + '/' + GH.repo + '/git/ref/heads/' + GH.zweig)
+      .then(function (ref) {
+        basisSha = ref.object.sha;
+        return ghAnfrage('/repos/' + GH.besitzer + '/' + GH.repo + '/git/commits/' + basisSha);
+      })
+      .then(function (c) {
+        baumSha = c.tree.sha;
+        var baum = [];
+        var kette = Promise.resolve();
+        dateien.forEach(function (d, i) {
+          kette = kette.then(function () {
+            schritt('Lade Datei ' + (i + 1) + ' von ' + dateien.length + ' …');
+            return ghAnfrage('/repos/' + GH.besitzer + '/' + GH.repo + '/git/blobs', {
+              method: 'POST',
+              body: JSON.stringify({ content: base64Von(d.daten), encoding: 'base64' })
+            }).then(function (blob) {
+              baum.push({ path: d.pfad, mode: '100644', type: 'blob', sha: blob.sha });
+            });
+          });
+        });
+        return kette.then(function () { return baum; });
+      })
+      .then(function (baum) {
+        schritt('Speichere …');
+        return ghAnfrage('/repos/' + GH.besitzer + '/' + GH.repo + '/git/trees', {
+          method: 'POST',
+          body: JSON.stringify({ base_tree: baumSha, tree: baum })
+        });
+      })
+      .then(function (neuerBaum) {
+        return ghAnfrage('/repos/' + GH.besitzer + '/' + GH.repo + '/git/commits', {
+          method: 'POST',
+          body: JSON.stringify({
+            message: 'Galerie aktualisiert (' + vorbereitet.aktiv.length + ' Bilder)',
+            tree: neuerBaum.sha, parents: [basisSha]
+          })
+        });
+      })
+      .then(function (commit) {
+        return ghAnfrage('/repos/' + GH.besitzer + '/' + GH.repo + '/git/refs/heads/' + GH.zweig, {
+          method: 'PATCH', body: JSON.stringify({ sha: commit.sha })
+        });
+      })
+      .then(function () {
+        elUeber.textContent = urspruenglich;
+        elUeber.disabled = false; elLaden.disabled = false;
+        liste.forEach(function (b) { b.geaendert = false; b.neu = false; b.neuGross = null; b.neuKlein = null; });
+        liste = liste.filter(function (b) { return !b.weg; });
+        zeichne();
+        melde('');
+        alert('Übertragen! Die Webseite ist in etwa einer Minute aktuell.\n\nDanach mit Strg+F5 bzw. Cmd+Shift+R neu laden.');
+      })
+      .catch(function (e) {
+        elUeber.textContent = urspruenglich;
+        elUeber.disabled = false; elLaden.disabled = false;
+        melde('Übertragung fehlgeschlagen – ' + e.message + '. Du kannst stattdessen das Paket herunterladen.');
+      });
+  });
+
+  verbindungAnzeigen();
 
   document.getElementById('fuss').textContent =
     'Alles läuft auf deinem Gerät – es werden keine Bilder ins Internet geladen. Webseite: ferienhaus-mara-walsrode.de';
