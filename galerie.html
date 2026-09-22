@@ -47,9 +47,10 @@
     <section>
       <div class="container">
         <div class="section-head">
-          <div><p class="eyebrow">24 Aufnahmen</p><h2>Ein vollständiger Eindruck</h2></div>
+          <div><p class="eyebrow" id="galleryCount">24 Aufnahmen</p><h2>Ein vollständiger Eindruck</h2></div>
           <p>Klicken Sie auf das große Bild, um es in Vollansicht zu öffnen. Auf dem Handy können Sie zwischen den Bildern wischen.</p>
         </div>
+        <div class="gallery-filter" id="galleryFilter" role="group" aria-label="Bilder nach Bereich filtern"></div>
         <div class="gallery-slider">
           <button class="gallery-arrow prev" type="button" aria-label="Vorheriges Bild">&#10094;</button>
           <img id="galleryImage" src="assets/gallery/81029433147171.jpg" alt="Überdachte Terrasse mit Lounge-Möbeln und Gartenhaus" width="1200" height="800" style="cursor: zoom-in" role="button" tabindex="0">
@@ -68,44 +69,16 @@
     <img id="lightboxImage" src="" alt="">
   </div>
 
+  <script src="galerie-daten.js"></script>
   <script src="nav.js"></script>
   <script>
-    const IDS = [
-      '81029433147171','5366703147171','78366816018951','17084226147171','24585632147171',
-      '69836065128951','38069065833061','59300845128951','39519326147171',
-      '63020875833061','50869183147171','86749355128951','97050373147171','48874788064961',
-      '25374107128951','15937773147171','20724426538951','24563931773761','8686663147171',
-      '9329606147171','93860508128951','24704618128951','2184567128951','29133987128951'
-    ];
-    const ALTS = [
-      'Überdachte Terrasse mit Lounge-Möbeln und Gartenhaus',
-      'Schlafzimmer mit Doppelbett',
-      'Außenansicht des Ferienhauses',
-      'Innenansicht der Wohnung',
-      'Wohnbereich mit Sitzgelegenheit',
-      'Ausstattung der Unterkunft',
-      'Essbereich',
-      'Weiterer Wohnraum',
-      'Badezimmer',
-      'Schlafbereich im Dachgeschoss',
-      'Küche mit grauen Schränken und Kühlschrank',
-      'Badezimmer mit Badewanne und separater Dusche',
-      'Garten mit Blumenbeet und Rasenfläche',
-      'Überdachte Terrasse mit Gasgrill',
-      'Küchendetail mit Gewürzregal und Küchenutensilien',
-      'Schlafzimmer mit Spiegel-Kleiderschrank, Doppelbett und Babybett',
-      'Offene Holztreppe ins Obergeschoss',
-      'Treppenaufgang mit Stufenmatten',
-      'Außenbereich mit Rosenstrauch',
-      'Gartendetail mit Clematis-Blüten',
-      'Historischer Bunker im Erholungswald Eibia',
-      'Waldweg im Erholungswald bei Walsrode',
-      'Historische Wassermühle in der Umgebung',
-      'Erholungswald bei Walsrode'
-    ];
+    const GAL = (window.GALERIE || []);
+    const IDS  = GAL.map(b => b.datei);
+    const ALTS = GAL.map(b => b.text || '');
+    const KATS = GAL.map(b => b.kategorie || '');
 
-    function imgUrl(id, size) {
-      return (size === 'bilder_klein' ? 'assets/gallery/thumbs/' : 'assets/gallery/') + id + '.jpg';
+    function imgUrl(datei, size) {
+      return (size === 'bilder_klein' ? 'assets/gallery/thumbs/' : 'assets/gallery/') + datei;
     }
 
     const slide = document.getElementById('galleryImage');
@@ -117,31 +90,62 @@
     let current = 0;
     let inView = true;
 
-    IDS.forEach((id, i) => {
-      const b = document.createElement('button');
-      b.type = 'button';
-      b.setAttribute('aria-label', ALTS[i]);
-      const im = document.createElement('img');
-      im.src = imgUrl(id, 'bilder_klein');
-      im.alt = ALTS[i];
-      im.loading = 'lazy';
-      im.decoding = 'async';
-      im.width = 120;
-      im.height = 82;
-      b.appendChild(im);
-      b.addEventListener('click', () => show(i));
-      thumbs.appendChild(b);
-    });
+    // Sichtbare Auswahl (je nach Kategorie-Filter)
+    let ansicht = IDS.map((_, i) => i);
+
+    function vorschauBauen() {
+      thumbs.innerHTML = '';
+      ansicht.forEach((gi, pos) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.setAttribute('aria-label', ALTS[gi]);
+        const im = document.createElement('img');
+        im.src = imgUrl(IDS[gi], 'bilder_klein');
+        im.alt = ALTS[gi];
+        im.loading = 'lazy';
+        im.decoding = 'async';
+        im.width = 120;
+        im.height = 82;
+        b.appendChild(im);
+        b.addEventListener('click', () => show(pos));
+        thumbs.appendChild(b);
+      });
+    }
+
+    function filterBauen() {
+      const leiste = document.getElementById('galleryFilter');
+      if (!leiste) return;
+      const kats = [];
+      KATS.forEach(k => { if (k && kats.indexOf(k) === -1) kats.push(k); });
+      if (!kats.length) return;
+      leiste.innerHTML = '';
+      ['Alle'].concat(kats).forEach(k => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = k;
+        b.className = (k === 'Alle' ? 'active' : '');
+        b.addEventListener('click', () => {
+          leiste.querySelectorAll('button').forEach(x => x.classList.remove('active'));
+          b.classList.add('active');
+          ansicht = IDS.map((_, i) => i).filter(i => k === 'Alle' || KATS[i] === k);
+          vorschauBauen();
+          show(0);
+        });
+        leiste.appendChild(b);
+      });
+    }
 
     function show(i) {
-      current = (i + IDS.length) % IDS.length;
-      slide.src = imgUrl(IDS[current], 'bilder_gross');
-      slide.alt = ALTS[current];
-      counter.textContent = (current + 1) + ' / ' + IDS.length;
+      if (!ansicht.length) return;
+      current = (i + ansicht.length) % ansicht.length;
+      const gi = ansicht[current];
+      slide.src = imgUrl(IDS[gi], 'bilder_gross');
+      slide.alt = ALTS[gi];
+      counter.textContent = (current + 1) + ' / ' + ansicht.length;
       thumbs.querySelectorAll('button').forEach((b, idx) => b.classList.toggle('active', idx === current));
       if (lightbox.classList.contains('open')) {
-        lightboxImg.src = imgUrl(IDS[current], 'bilder_original');
-        lightboxImg.alt = ALTS[current];
+        lightboxImg.src = imgUrl(IDS[gi], 'bilder_original');
+        lightboxImg.alt = ALTS[gi];
       }
     }
 
@@ -150,8 +154,9 @@
 
     // Lightbox (Vollansicht)
     function openLightbox() {
-      lightboxImg.src = imgUrl(IDS[current], 'bilder_original');
-      lightboxImg.alt = ALTS[current];
+      const gi = ansicht[current];
+      lightboxImg.src = imgUrl(IDS[gi], 'bilder_original');
+      lightboxImg.alt = ALTS[gi];
       lightbox.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
@@ -192,6 +197,10 @@
     addSwipe(slider);
     addSwipe(lightbox);
 
+    const zaehler = document.getElementById('galleryCount');
+    if (zaehler) zaehler.textContent = IDS.length + (IDS.length === 1 ? ' Aufnahme' : ' Aufnahmen');
+    filterBauen();
+    vorschauBauen();
     show(0);
   </script>
 </body>
