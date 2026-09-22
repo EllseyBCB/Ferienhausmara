@@ -439,18 +439,18 @@ __TITEL__
   /* Paket bauen */
   function datenDatei(aktiv) {
     var kopf =
-'/* =====================================================================\\n' +
-'   BILDERLISTE DER GALERIE  -  Ferienhaus Mara\\n' +
-'   Erstellt mit dem Bilder-Werkzeug am ' + new Date().toLocaleDateString('de-DE') + '\\n' +
-'   Reihenfolge in dieser Liste = Reihenfolge auf der Webseite.\\n' +
-'   ===================================================================== */\\n\\n' +
-'window.GALERIE = [\\n';
+'/* =====================================================================\n' +
+'   BILDERLISTE DER GALERIE  -  Ferienhaus Mara\n' +
+'   Erstellt mit dem Bilder-Werkzeug am ' + new Date().toLocaleDateString('de-DE') + '\n' +
+'   Reihenfolge in dieser Liste = Reihenfolge auf der Webseite.\n' +
+'   ===================================================================== */\n\n' +
+'window.GALERIE = [\n';
     var zeilen = aktiv.map(function (b) {
       return '  { datei: ' + JSON.stringify(b.datei) +
              ', text: ' + JSON.stringify(b.text || '') +
              ', kategorie: ' + JSON.stringify(b.kategorie || '') + ' }';
     });
-    return kopf + zeilen.join(',\\n') + '\\n];\\n';
+    return kopf + zeilen.join(',\n') + '\n];\n';
   }
 
   function anleitung(aktiv, neueDat, wegDat) {
@@ -488,7 +488,7 @@ __TITEL__
       z.push('nicht mehr angezeigt. Du kannst sie auf GitHub loeschen,');
       z.push('musst es aber nicht.');
     }
-    return z.join('\\n');
+    return z.join('\n');
   }
 
   async function speichere(dateiname, blob) {
