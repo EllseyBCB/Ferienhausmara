@@ -87,6 +87,10 @@ __TITEL__
   .ablage.ziel{border-color:var(--gold);color:var(--ink)}
   .ablage strong{display:block;margin-bottom:5px;color:var(--ink);font-size:1.02rem}
 
+  .eckdaten{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;
+            padding:17px 18px;border:1px solid var(--line);border-radius:15px;
+            background:var(--paper);box-shadow:var(--shadow)}
+  .eckdaten .einheit{color:var(--muted);font-size:.8rem;margin-top:4px}
   .verbindung{margin:20px 0 0;padding:16px 18px;border:1px solid var(--line);
               border-radius:15px;background:var(--paper);box-shadow:var(--shadow)}
   .verbindung h3{margin:0 0 4px;font-family:Georgia,serif;font-weight:400;font-size:1.12rem}
@@ -115,7 +119,7 @@ __TITEL__
   <header>
     <p class="eyebrow">Ferienhaus Mara · Walsrode</p>
     <h1>Fotos der Galerie verwalten</h1>
-    <p class="lede">Bilder austauschen, löschen, neue hinzufügen, sortieren und benennen. Einmal mit GitHub verbunden, genügt danach ein Klick – sonst bekommst du ein fertiges Paket zum Hochladen.</p>
+    <p class="lede">Preise ändern sowie Bilder austauschen, löschen, hinzufügen, sortieren und benennen. Einmal mit GitHub verbunden, genügt danach ein Klick – sonst bekommst du ein fertiges Paket zum Hochladen.</p>
   </header>
 
   <div class="leiste">
@@ -164,6 +168,31 @@ __TITEL__
 
   <p class="hinweis"><strong>So läuft es:</strong> Alles passiert hier auf deinem Gerät – es wird nichts hochgeladen. Wenn du fertig bist, bekommst du eine ZIP-Datei. Die entpackst du und lädst den Inhalt bei GitHub hoch. Eine Anleitung liegt im Paket bei.</p>
 
+  <h2>Preise und Eckdaten</h2>
+  <p class="sub">Diese Werte erscheinen automatisch an allen passenden Stellen der Webseite.</p>
+  <div class="eckdaten">
+    <div>
+      <label for="preisProNacht">Preis pro Nacht (2 Personen)</label>
+      <input type="text" id="preisProNacht" inputmode="numeric">
+      <div class="einheit">Euro – nur die Zahl</div>
+    </div>
+    <div>
+      <label for="preisWeiterePerson">Aufpreis je weiterer Person</label>
+      <input type="text" id="preisWeiterePerson" inputmode="numeric">
+      <div class="einheit">Euro pro Nacht – nur die Zahl</div>
+    </div>
+    <div>
+      <label for="maxGaeste">Maximale Gästezahl</label>
+      <input type="text" id="maxGaeste" inputmode="numeric">
+      <div class="einheit">Personen</div>
+    </div>
+    <div>
+      <label for="wohnflaeche">Wohnfläche</label>
+      <input type="text" id="wohnflaeche" inputmode="numeric">
+      <div class="einheit">Quadratmeter</div>
+    </div>
+  </div>
+
   <h2>Neue Fotos hinzufügen</h2>
   <p class="sub">Mehrere Bilder auf einmal möglich. Sie werden unten an die Liste angehängt.</p>
   <div class="ablage" id="ablage" tabindex="0" role="button" aria-label="Neue Fotos auswählen oder hierher ziehen">
@@ -190,6 +219,67 @@ __TITEL__
   var NOTFALL = __DATEN__;          // Rueckfall, falls die Webseite nicht erreichbar ist
   var KATEGORIEN = __KATEGORIEN__;
   var START = [];
+  var FELDER = ['preisProNacht', 'preisWeiterePerson', 'maxGaeste', 'wohnflaeche'];
+  var NOTFALL_WERTE = { preisProNacht: '', preisWeiterePerson: '', maxGaeste: '', wohnflaeche: '' };
+  var WERTE_START = {};     // Stand von der Webseite
+  var WERTE = {};           // aktuell im Formular
+
+  function werteEinlesen() {
+    FELDER.forEach(function (f) {
+      var el = document.getElementById(f);
+      if (el) WERTE[f] = el.value.trim();
+    });
+  }
+
+  function werteAnzeigen() {
+    FELDER.forEach(function (f) {
+      var el = document.getElementById(f);
+      if (el) el.value = WERTE[f] || '';
+    });
+  }
+
+  function werteGeaendert() {
+    return FELDER.some(function (f) { return (WERTE[f] || '') !== (WERTE_START[f] || ''); });
+  }
+
+  function inhalteDatei() {
+    return '/* =====================================================================\n' +
+      '   INHALTE VON FERIENHAUS MARA\n' +
+      '   Geaendert mit dem Werkzeug "Fotoverwaltung" am ' + new Date().toLocaleDateString('de-DE') + '\n' +
+      '   Nur die Zahlen zwischen den Anfuehrungszeichen aendern.\n' +
+      '   ===================================================================== */\n\n' +
+      'window.INHALTE = {\n' +
+      '  preisProNacht: ' + JSON.stringify(WERTE.preisProNacht || '') + ',\n' +
+      '  preisWeiterePerson: ' + JSON.stringify(WERTE.preisWeiterePerson || '') + ',\n' +
+      '  maxGaeste: ' + JSON.stringify(WERTE.maxGaeste || '') + ',\n' +
+      '  wohnflaeche: ' + JSON.stringify(WERTE.wohnflaeche || '') + '\n' +
+      '};\n\n' +
+      '/* Ab hier nichts aendern - traegt die Werte in die Seiten ein. */\n' +
+      '(function () {\n' +
+      '  function werteEintragen() {\n' +
+      '    var werte = window.INHALTE || {};\n' +
+      '    var stellen = document.querySelectorAll(\'[data-wert]\');\n' +
+      '    for (var i = 0; i < stellen.length; i++) {\n' +
+      '      var name = stellen[i].getAttribute(\'data-wert\');\n' +
+      '      if (Object.prototype.hasOwnProperty.call(werte, name)) {\n' +
+      '        if (stellen[i].textContent !== werte[name]) stellen[i].textContent = werte[name];\n' +
+      '      }\n' +
+      '    }\n' +
+      '  }\n' +
+      '  werteEintragen();\n' +
+      '  var beobachter = null;\n' +
+      '  if (window.MutationObserver && document.documentElement) {\n' +
+      '    beobachter = new MutationObserver(werteEintragen);\n' +
+      '    beobachter.observe(document.documentElement, { childList: true, subtree: true });\n' +
+      '  }\n' +
+      '  function abschliessen() {\n' +
+      '    werteEintragen();\n' +
+      '    if (beobachter) { beobachter.disconnect(); beobachter = null; }\n' +
+      '  }\n' +
+      '  document.addEventListener(\'DOMContentLoaded\', abschliessen);\n' +
+      '  window.addEventListener(\'load\', abschliessen);\n' +
+      '})();\n';
+  }
 
   function vorschauUrl(datei) {
     return BASIS + 'assets/gallery/thumbs/' + encodeURIComponent(datei);
@@ -373,7 +463,8 @@ __TITEL__
     var weg     = liste.filter(function (b) { return b.weg; }).length;
     var sichtbar = liste.filter(function (b) { return !b.weg; }).length;
     elStand.innerHTML = '<b>' + sichtbar + '</b> Bilder in der Galerie · ' +
-      '<b>' + ersetzt + '</b> ersetzt · <b>' + neue + '</b> neu · <b>' + weg + '</b> gelöscht';
+      '<b>' + ersetzt + '</b> ersetzt · <b>' + neue + '</b> neu · <b>' + weg + '</b> gelöscht' +
+      (werteGeaendert() ? ' · <b>Preis/Eckdaten geändert</b>' : '');
     elLaden.disabled = false;
   }
 
@@ -440,6 +531,8 @@ __TITEL__
   document.getElementById('zuruecksetzen').addEventListener('click', function () {
     if (!confirm('Alle Änderungen verwerfen und von vorn beginnen?')) return;
     liste = ausDaten(START);
+    WERTE = {}; FELDER.forEach(function (f) { WERTE[f] = WERTE_START[f]; });
+    werteAnzeigen();
     melde(''); zeichne();
   });
 
@@ -473,6 +566,7 @@ __TITEL__
     z.push('3) Aus dem entpackten Ordner ALLES hineinziehen:');
     z.push('   - den Ordner "assets"');
     z.push('   - die Datei "galerie-daten.js"');
+    z.push('   - die Datei "inhalte.js", falls vorhanden (Preise)');
     z.push('   (Die Datei ANLEITUNG.txt wird nicht gebraucht.)');
     z.push('');
     z.push('4) Unten auf "Commit changes" klicken.');
@@ -534,6 +628,9 @@ __TITEL__
 
     var enc = new TextEncoder();
     eintraege.push({ pfad: 'galerie-daten.js', daten: enc.encode(datenDatei(aktiv)) });
+    if (werteGeaendert()) {
+      eintraege.push({ pfad: 'inhalte.js', daten: enc.encode(inhalteDatei()) });
+    }
     eintraege.push({ pfad: 'ANLEITUNG.txt', daten: enc.encode(anleitung(aktiv, neueDat, wegDat)) });
     return { eintraege: eintraege, aktiv: aktiv };
   }
@@ -680,7 +777,8 @@ __TITEL__
         return ghAnfrage('/repos/' + GH.besitzer + '/' + GH.repo + '/git/commits', {
           method: 'POST',
           body: JSON.stringify({
-            message: 'Galerie aktualisiert (' + vorbereitet.aktiv.length + ' Bilder)',
+            message: 'Webseite aktualisiert: ' + vorbereitet.aktiv.length + ' Bilder'
+                     + (werteGeaendert() ? ', Preise/Eckdaten' : ''),
             tree: neuerBaum.sha, parents: [basisSha]
           })
         });
@@ -693,6 +791,7 @@ __TITEL__
       .then(function () {
         elUeber.textContent = urspruenglich;
         elUeber.disabled = false; elLaden.disabled = false;
+        FELDER.forEach(function (f) { WERTE_START[f] = WERTE[f]; });
         liste.forEach(function (b) { b.geaendert = false; b.neu = false; b.neuGross = null; b.neuKlein = null; });
         liste = liste.filter(function (b) { return !b.weg; });
         zeichne();
@@ -709,6 +808,25 @@ __TITEL__
   verbindungAnzeigen();
 
   /* ============ Aktuellen Stand von der Webseite holen ============ */
+  function werteLaden() {
+    var alt = document.getElementById('werteSkript');
+    if (alt) alt.remove();
+    var sk = document.createElement('script');
+    sk.id = 'werteSkript';
+    sk.src = BASIS + 'inhalte.js?stand=' + Date.now();
+    sk.onload = function () {
+      var q = window.INHALTE || NOTFALL_WERTE;
+      FELDER.forEach(function (f) { WERTE_START[f] = String(q[f] == null ? '' : q[f]); });
+      WERTE = {}; FELDER.forEach(function (f) { WERTE[f] = WERTE_START[f]; });
+      werteAnzeigen(); standAus();
+    };
+    sk.onerror = function () {
+      FELDER.forEach(function (f) { WERTE_START[f] = ''; WERTE[f] = ''; });
+      werteAnzeigen();
+    };
+    document.head.appendChild(sk);
+  }
+
   function standLaden(nachher) {
     var alt = document.getElementById('standSkript');
     if (alt) alt.remove();
@@ -759,10 +877,16 @@ __TITEL__
       if (!confirm('Es gibt noch nicht übertragene Änderungen. Wirklich neu laden und verwerfen?')) return;
     }
     quelleAnzeigen('Wird geladen …');
-    standLaden();
+    standLaden(); werteLaden();
+  });
+
+  FELDER.forEach(function (f) {
+    var el = document.getElementById(f);
+    if (el) el.addEventListener('input', function () { werteEinlesen(); standAus(); });
   });
 
   standLaden();
+  werteLaden();
 
   document.getElementById('fuss').textContent =
     'Die Bearbeitung läuft auf deinem Gerät. Übertragen wird nur, wenn du es auslöst. Webseite: ferienhaus-mara-walsrode.de';
