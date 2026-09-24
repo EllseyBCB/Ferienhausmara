@@ -120,10 +120,12 @@ __TITEL__
 
   <div class="leiste">
     <div class="stand" id="stand">Noch keine Änderungen.</div>
+    <button class="knopf still" id="neuladen" type="button">Neu laden</button>
     <button class="knopf still" id="zuruecksetzen" type="button">Alles zurücksetzen</button>
     <button class="knopf still" id="herunterladen" type="button" disabled>Paket herunterladen</button>
     <button class="knopf" id="uebertragen" type="button" disabled hidden>Zu GitHub übertragen</button>
   </div>
+  <p id="quelle" style="margin:8px 2px 0;color:var(--muted);font-size:.84rem">Stand wird geladen …</p>
   <div class="fehler" id="fehler"></div>
 
   <div class="verbindung">
@@ -184,9 +186,14 @@ __TITEL__
 (function () {
   "use strict";
 
-  var START = __DATEN__;
-  var VORSCHAU = __VORSCHAU__;
+  var BASIS = 'https://ferienhaus-mara-walsrode.de/';
+  var NOTFALL = __DATEN__;          // Rueckfall, falls die Webseite nicht erreichbar ist
   var KATEGORIEN = __KATEGORIEN__;
+  var START = [];
+
+  function vorschauUrl(datei) {
+    return BASIS + 'assets/gallery/thumbs/' + encodeURIComponent(datei);
+  }
 
   var MAX_GROSS = 1600, MAX_KLEIN = 420;
 
@@ -207,13 +214,17 @@ __TITEL__
   var token = '';
   try { token = localStorage.getItem('fm_gh_token') || ''; } catch (e) { token = ''; }
 
-  var liste = START.map(function (b) {
-    return {
-      datei: b.datei, text: b.text, kategorie: b.kategorie,
-      vorschau: VORSCHAU[b.datei] || '',
-      neuGross: null, neuKlein: null, geaendert: false, neu: false, weg: false
-    };
-  });
+  var liste = [];
+
+  function ausDaten(daten) {
+    return daten.map(function (b) {
+      return {
+        datei: b.datei, text: b.text || '', kategorie: b.kategorie || '',
+        vorschau: vorschauUrl(b.datei),
+        neuGross: null, neuKlein: null, geaendert: false, neu: false, weg: false
+      };
+    });
+  }
 
   var elListe = document.getElementById('liste');
   var elStand = document.getElementById('stand');
@@ -428,11 +439,7 @@ __TITEL__
 
   document.getElementById('zuruecksetzen').addEventListener('click', function () {
     if (!confirm('Alle Änderungen verwerfen und von vorn beginnen?')) return;
-    liste = START.map(function (b) {
-      return { datei: b.datei, text: b.text, kategorie: b.kategorie,
-               vorschau: VORSCHAU[b.datei] || '', neuGross: null, neuKlein: null,
-               geaendert: false, neu: false, weg: false };
-    });
+    liste = ausDaten(START);
     melde(''); zeichne();
   });
 
@@ -547,14 +554,6 @@ __TITEL__
       elLaden.disabled = false; elLaden.textContent = 'Paket herunterladen';
     }, 30);
   });
-
-  /* Kategorie-Vorschlaege */
-  var dl = document.createElement('datalist');
-  dl.id = 'katliste';
-  KATEGORIEN.forEach(function (k) {
-    var o = document.createElement('option'); o.value = k; dl.appendChild(o);
-  });
-  document.body.appendChild(dl);
 
 
   /* ============ Verbindung zu GitHub ============ */
@@ -709,9 +708,63 @@ __TITEL__
 
   verbindungAnzeigen();
 
-  document.getElementById('fuss').textContent =
-    'Alles läuft auf deinem Gerät – es werden keine Bilder ins Internet geladen. Webseite: ferienhaus-mara-walsrode.de';
+  /* ============ Aktuellen Stand von der Webseite holen ============ */
+  function standLaden(nachher) {
+    var alt = document.getElementById('standSkript');
+    if (alt) alt.remove();
+    var sk = document.createElement('script');
+    sk.id = 'standSkript';
+    sk.src = BASIS + 'galerie-daten.js?stand=' + Date.now();
+    sk.onload = function () {
+      var d = (window.GALERIE && window.GALERIE.length) ? window.GALERIE : NOTFALL;
+      START = d.map(function (b) { return { datei: b.datei, text: b.text, kategorie: b.kategorie }; });
+      liste = ausDaten(START);
+      d.forEach(function (b) {
+        if (b.kategorie && KATEGORIEN.indexOf(b.kategorie) === -1) KATEGORIEN.push(b.kategorie);
+      });
+      katlisteBauen();
+      zeichne();
+      quelleAnzeigen('Stand von der Webseite geladen – ' + START.length + ' Bilder.');
+      if (nachher) nachher();
+    };
+    sk.onerror = function () {
+      START = NOTFALL.slice();
+      liste = ausDaten(START);
+      katlisteBauen();
+      zeichne();
+      quelleAnzeigen('Webseite nicht erreichbar – gespeicherter Stand wird angezeigt.');
+      if (nachher) nachher();
+    };
+    document.head.appendChild(sk);
+  }
 
-  zeichne();
+  function quelleAnzeigen(t) {
+    var el = document.getElementById('quelle');
+    if (el) el.textContent = t;
+  }
+
+  function katlisteBauen() {
+    var vorhanden = document.getElementById('katliste');
+    if (vorhanden) vorhanden.remove();
+    var dl = document.createElement('datalist');
+    dl.id = 'katliste';
+    KATEGORIEN.forEach(function (k) {
+      var o = document.createElement('option'); o.value = k; dl.appendChild(o);
+    });
+    document.body.appendChild(dl);
+  }
+
+  document.getElementById('neuladen').addEventListener('click', function () {
+    if (liste.some(function (b) { return b.geaendert || b.weg; })) {
+      if (!confirm('Es gibt noch nicht übertragene Änderungen. Wirklich neu laden und verwerfen?')) return;
+    }
+    quelleAnzeigen('Wird geladen …');
+    standLaden();
+  });
+
+  standLaden();
+
+  document.getElementById('fuss').textContent =
+    'Die Bearbeitung läuft auf deinem Gerät. Übertragen wird nur, wenn du es auslöst. Webseite: ferienhaus-mara-walsrode.de';
 })();
 </script>
