@@ -560,3 +560,7 @@ footer {
 .gallery-filter button.active { background: var(--green); border-color: var(--green); color: var(--ivory); }
 .gallery-filter button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 @media (max-width: 620px) { .gallery-filter button { padding: 8px 13px; font-size: .86rem; } }
+
+/* Freier Zusatztext hinter dem Preis - verschwindet, wenn er leer ist */
+.preis-hinweis:empty { display: none; }
+.price-box .preis-hinweis { margin-top: 6px; color: rgba(251,247,239,.78); font-size: .95rem; }

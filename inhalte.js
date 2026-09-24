@@ -29,7 +29,11 @@ window.INHALTE = {
   maxGaeste: "6",
 
   // Wohnflaeche in Quadratmetern (nur die Zahl)
-  wohnflaeche: "80"
+  wohnflaeche: "80",
+
+  // Freier Zusatztext hinter dem Preis, z.B. "zzgl. Endreinigung 45 Euro".
+  // Leer lassen ("") blendet ihn ueberall aus.
+  preisHinweis: ""
 
 };
 

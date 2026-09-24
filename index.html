@@ -281,6 +281,9 @@
     .booking-item:nth-child(4) { border-bottom: 0; }
     .booking-cta { display: none; }
 
+    /* Freier Zusatztext hinter dem Preis - verschwindet, wenn er leer ist */
+    .preis-hinweis:empty { display: none; }
+
     /* Werte aus inhalte.js sollen immer wie der Text drumherum aussehen */
     [data-wert], .booking-item [data-wert], .fact [data-wert] {
       display: inline;
@@ -732,7 +735,7 @@
     <aside class="booking-card" aria-label="Kurzfakten">
       <div class="booking-item"><span>Wohnfläche</span><strong>80 m²</strong></div>
       <div class="booking-item"><span>Belegung</span><strong>Bis zu <span data-wert="maxGaeste">6</span> Gäste</strong></div>
-      <div class="booking-item"><span>Preis</span><strong><span data-wert="preisProNacht">80</span> Euro für 2 Personen · jede weitere Person <span data-wert="preisWeiterePerson">15</span> Euro</strong></div>
+      <div class="booking-item"><span>Preis</span><strong><span data-wert="preisProNacht">80</span> Euro für 2 Personen · jede weitere Person <span data-wert="preisWeiterePerson">15</span> Euro <span class="preis-hinweis" data-wert="preisHinweis"></span></strong></div>
       <div class="booking-item"><span>Bewertung</span><strong>4.8 (16 Bew.)</strong></div>
       <div class="booking-cta"><a class="button" href="https://www.ferienhausmiete.de/285700.htm" target="_blank" rel="noopener">Zur Quelle</a></div>
     </aside>
@@ -869,7 +872,7 @@
         <div>
           <p class="small-title">Anfrage</p>
           <h2>Jetzt Ihren Aufenthalt in Walsrode anfragen</h2>
-          <p>Ab <span data-wert="preisProNacht">80</span> Euro pro Nacht, jede weitere Person <span data-wert="preisWeiterePerson">15</span> Euro. Prüfen Sie freie Reisetermine und senden Sie eine unverbindliche Anfrage für das Ferienhaus Mara.</p>
+          <p>Ab <span data-wert="preisProNacht">80</span> Euro pro Nacht, jede weitere Person <span data-wert="preisWeiterePerson">15</span> Euro. <span class="preis-hinweis" data-wert="preisHinweis"></span> Prüfen Sie freie Reisetermine und senden Sie eine unverbindliche Anfrage für das Ferienhaus Mara.</p>
           <a class="button light" href="buchen.html#kalender">Verfügbarkeit prüfen</a>
         </div>
       </div>

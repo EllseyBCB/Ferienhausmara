@@ -191,6 +191,11 @@ __TITEL__
       <input type="text" id="wohnflaeche" inputmode="numeric">
       <div class="einheit">Quadratmeter</div>
     </div>
+    <div style="grid-column:1/-1">
+      <label for="preisHinweis">Zusatz hinter dem Preis (frei formulierbar)</label>
+      <input type="text" id="preisHinweis" placeholder="z. B. zzgl. Endreinigung 45 Euro">
+      <div class="einheit">Erscheint hinter dem Preis. Leer lassen blendet ihn aus.</div>
+    </div>
   </div>
 
   <h2>Neue Fotos hinzufügen</h2>
@@ -219,8 +224,8 @@ __TITEL__
   var NOTFALL = __DATEN__;          // Rueckfall, falls die Webseite nicht erreichbar ist
   var KATEGORIEN = __KATEGORIEN__;
   var START = [];
-  var FELDER = ['preisProNacht', 'preisWeiterePerson', 'maxGaeste', 'wohnflaeche'];
-  var NOTFALL_WERTE = { preisProNacht: '', preisWeiterePerson: '', maxGaeste: '', wohnflaeche: '' };
+  var FELDER = ['preisProNacht', 'preisWeiterePerson', 'maxGaeste', 'wohnflaeche', 'preisHinweis'];
+  var NOTFALL_WERTE = { preisProNacht: '', preisWeiterePerson: '', maxGaeste: '', wohnflaeche: '', preisHinweis: '' };
   var WERTE_START = {};     // Stand von der Webseite
   var WERTE = {};           // aktuell im Formular
 
@@ -252,7 +257,8 @@ __TITEL__
       '  preisProNacht: ' + JSON.stringify(WERTE.preisProNacht || '') + ',\n' +
       '  preisWeiterePerson: ' + JSON.stringify(WERTE.preisWeiterePerson || '') + ',\n' +
       '  maxGaeste: ' + JSON.stringify(WERTE.maxGaeste || '') + ',\n' +
-      '  wohnflaeche: ' + JSON.stringify(WERTE.wohnflaeche || '') + '\n' +
+      '  wohnflaeche: ' + JSON.stringify(WERTE.wohnflaeche || '') + ',\n' +
+      '  preisHinweis: ' + JSON.stringify(WERTE.preisHinweis || '') + '\n' +
       '};\n\n' +
       '/* Ab hier nichts aendern - traegt die Werte in die Seiten ein. */\n' +
       '(function () {\n' +
